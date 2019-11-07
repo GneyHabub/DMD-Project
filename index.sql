@@ -1,173 +1,188 @@
 -- /Users/gneyhabub/Documents/GitHub/DMD-Project/index.sql
 
+DROP TABLE surgery;
+DROP TABLE meds_for_surgery;
+DROP TABLE doctors_report;
+DROP TABLE medical_history;
+DROP TABLE staff_meeting;
+DROP TABLE CCTV_rec;
+DROP TABLE event;
+DROP TABLE notification;
+DROP TABLE invoice;
+DROP TABLE email;
+DROP TABLE request_med;
+DROP TABLE request_food;
+DROP TABLE depaertement;
+DROP TABLE lab;
+DROP TABLE food;
+DROP TABLE medicine;
+DROP TABLE contact_details;
+DROP TABLE head_doctor;
+DROP TABLE reseptionist;
+DROP TABLE maintanence_worker;
+DROP TABLE cleaning_team_worker;
+DROP TABLE security_team_member;
+DROP TABLE hr;
+DROP TABLE pharmasist;
+DROP TABLE cook;
+DROP TABLE priest;
+DROP TABLE head_nurse;
+DROP TABLE nurse;
+DROP TABLE IT_specialist;
+DROP TABLE proff;
+DROP TABLE doc_education;
+DROP TABLE patients_address;
+DROP TABLE lab_technician;
+DROP TABLE appointment;
+DROP TABLE patient_complaint;
+DROP TABLE IT_complaint;
+DROP TABLE staff_complaint;
+DROP TABLE staff_member;
+DROP TABLE patient;
+DROP TABLE doctor;
+DROP TABLE person;
 
-drop table person;
-drop table contact_details;
-drop table staff_member;
-drop table head_doctor;
-drop table reseptionist;
-drop table maintanence_worker;
-drop table cleaning_team_worker;
-drop table security_team_member;
-drop table hr;
-drop table pharmasist;
-drop table cook;
-drop table priest;
-drop table head_nurse;
-drop table nurse;
-drop table IT_specialist;
-drop table proff;
-drop table doctor;
-drop table doc_education;
-drop table patient;
-drop table patients_address;
-drop table lab_technician;
-drop table appointment;
-drop table patient_complaint;
-drop table IT_complaint;
-drop table staff_complaint;
-
-create table person(
-    id INT primary key not null unique,
-    full_name VARCHAR(50) not null, -- Supposed to ba composite, but SQL doesn't support it, so let it be just a string
+CREATE TABLE person(
+    id INT PRIMARY KEY NOT NULL UNIQUE,
+    full_name VARCHAR(50) NOT NULL, -- Supposed to ba composite, but SQL doesn't support it, so let it be just a string
     email VARCHAR(50),
-    user_login VARCHAR(30) not null default 'login',
-    user_password VARCHAR(30) not null default '12345',
-    sex VARCHAR(1) not null,
+    user_login VARCHAR(30) NOT NULL default 'login',
+    user_password VARCHAR(30) NOT NULL default '12345',
+    sex VARCHAR(1) NOT NULL,
     date_of_birth DATE,
-    age INT not null,
-    permission_level INT not null default 0
+    age INT NOT NULL,
+    permission_level INT NOT NULL default 0
 );
 
-create table contact_details(
+CREATE TABLE contact_details(
     id INT,
-    foreign key(id) references person(id),
+    FOREIGN KEY(id) REFERENCES person(id),
     phone VARCHAR(20),
     telegram VARCHAR(30),
     other VARCHAR(50)
 );
 
-create table staff_member(
-    id INT unique,
-    foreign key(id) references person(id),
+CREATE TABLE staff_member(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     position VARCHAR(20),
-    salary INT not null,
+    salary INT NOT NULL,
     working_hours VARCHAR,
-    employed_since DATE not null,
+    employed_since DATE NOT NULL,
     room VARCHAR(10)
 );
 
-create table head_doctor(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE head_doctor(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     primary_speciality VARCHAR(20)
 );
 
-create table reseptionist(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE reseptionist(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     spoken_languages VARCHAR(100) default 'English' -- The same as in full name. we either crewate a new table, or just make it string.
 );
 
-create table maintanence_worker(
-    id INT,
-    foreign key(id) references person(id),
-    employment_type VARCHAR(9) not null, -- Strictly 'Part time' or 'Full time' only
+CREATE TABLE maintanence_worker(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    employment_type VARCHAR(9) NOT NULL, -- Strictly 'Part time' or 'Full time' only
     speciality VARCHAR(100) -- Composite again
 );
 
-create table cleaning_team_worker(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE cleaning_team_worker(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     employment_type VARCHAR(9) -- Strictly 'Part time' or 'Full time' only
 );
 
-create table security_team_member(
-    id INT,
-    foreign key(id) references person(id),
-    shifts VARCHAR(5) not null, -- 'Night' or 'Day' only
+CREATE TABLE security_team_member(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    shifts VARCHAR(5) NOT NULL, -- 'Night' or 'Day' only
     physical_test_grade VARCHAR(1) -- A, B, C or D
 );
 
-create table hr(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE hr(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     selection_responsibility VARCHAR(10)-- Strictly 'Interview' or 'Review' only
 );
 
-create table pharmasist(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE pharmasist(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
-    reasearch BIT not null-- Analogus to Boolean. 1 - True, 0 - False
+    reasearch BIT NOT NULL-- Analogus to Boolean. 1 - True, 0 - False
 );
 
-create table cook(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE cook(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     experience INT -- Years
 );
 
-create table priest(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE priest(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     religion VARCHAR(15)
 );
 
-create table head_nurse(
-    id INT,
-    foreign key(id) references person(id),
-    surgery_assistant BIT not null -- Whether or not he/she sometimes assist in surgeries
+CREATE TABLE head_nurse(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    surgery_assistant BIT NOT NULL -- Whether or not he/she sometimes assist in surgeries
 );
 
-create table nurse(
-    id INT,
-    foreign key(id) references person(id),
-    surgery_assistant BIT not null, -- Whether or not he/she sometimes assist in surgeries
+CREATE TABLE nurse(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    surgery_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist in surgeries
     preferred_shifts VARCHAR(5), -- 'Night' or 'Day' only
-    appointment_assistant BIT not null -- Whether or not he/she sometimes assist during appointments
+    appointment_assistant BIT NOT NULL -- Whether or not he/she sometimes assist during appointments
 );
 
-create table IT_specialist(
-    id INT,
-    foreign key(id) references person(id),
-    support_line BIT not null
+CREATE TABLE IT_specialist(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    support_line BIT NOT NULL
 );
 
-create table proff(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE proff(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     reasearch_topic VARCHAR(50),
-    surgery_participation BIT not null
+    surgery_participation BIT NOT NULL
 );
 
-create table doctor(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE doctor(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     speciality VARCHAR(30),
-    emergency_hours BIT not null, -- Has them or not
+    emergency_hours BIT NOT NULL, -- Has them or not
     experience INT default 0 -- Number of years in the industry
 );
 
-create table doc_education(
+CREATE TABLE doc_education(
     id INT,
-    foreign key(id) references doctor(id),
+    FOREIGN KEY(id) REFERENCES doctor(id),
     univercity VARCHAR(30),
     graduated DATE,
     degree VARCHAR (10) -- 'Bachelor', 'Magister', 'PhD'
 );
 
-create table patient(
-    id INT,
-    foreign key(id) references person(id),
-    registration_date DATE not null default now(),
+CREATE TABLE patient(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
+    registration_date DATE NOT NULL default now(),
     allergies VARCHAR(100), -- multivalued
     occupation VARCHAR(50)
 );
 
-create table patients_address(
+CREATE TABLE patients_address(
     id INT,
-    foreign key(id) references patient(id),
+    FOREIGN KEY(id) REFERENCES patient(id),
     country VARCHAR(30) default 'Russian Federation',
     district VARCHAR(40) default 'Tatarstan',
     city VARCHAR(20) default 'Innopolis',
@@ -176,44 +191,160 @@ create table patients_address(
     apartement VARCHAR(8)
 );
 
-create table lab_technician(
-    id INT,
-    foreign key(id) references person(id),
+CREATE TABLE lab_technician(
+    id INT UNIQUE,
+    FOREIGN KEY(id) REFERENCES person(id),
     education_level VARCHAR (15) -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
 );
 
-create table appointment(
-    id INT primary key,
+CREATE TABLE appointment(
+    id INT PRIMARY KEY,
     date DATE,
     patient_id INT,
     doctor_id INT,
-    foreign key (patient_id) references patient(id),
-    foreign key (dictor_id) references doctor(id)
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
-create table patient_complaint(
-    id INT primary key,
+CREATE TABLE patient_complaint(
+    id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
     subjectr VARCHAR(150),
     patient_id INT,
-    foreign key (patient_id) references patient(id)
+    FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
-create table IT_complaint(
-    id INT primary key,
+CREATE TABLE IT_complaint(
+    id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
     subjectr VARCHAR(150),
     user_id INT,
-    foreign key (user_id) references person(id)
+    FOREIGN KEY (user_id) REFERENCES person(id)
 );
 
-create table staff_complaint(
-    id INT primary key,
+CREATE TABLE staff_complaint(
+    id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
     subjectr VARCHAR(150),
     staff_id INT,
-    foreign key (staff_id) references staff_member(id)
+    FOREIGN KEY (staff_id) REFERENCES staff_member(id)
+);
+
+--------------------------------------------------------------------
+
+CREATE TABLE medicine(
+    name VARCHAR(30) PRIMARY KEY,
+    amount INT,
+    supplier VARCHAR(30)
+);
+
+CREATE TABLE surgery(
+    id INT PRIMARY KEY,
+    date DATE,
+    patient_id INT,
+    doctor_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
+);
+
+CREATE TABLE meds_for_surgery(
+    doctor_id INT,
+    med VARCHAR(30),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id),
+    FOREIGN KEY (med) REFERENCES medicine(name)
+);
+
+CREATE TABLE doctors_report(
+    appointment INT,
+    text VARCHAR(150),
+    FOREIGN KEY (appointment) REFERENCES appointment(id)
+);
+
+CREATE TABLE medical_history(
+    patient INT,
+    date DATE,
+    record VARCHAR(200),
+    FOREIGN KEY (patient) REFERENCES patient(id)
+);
+
+-- CREATE TABLE emergency_appointment(
+
+-- );
+
+CREATE TABLE staff_meeting(
+    date DATE PRIMARY KEY,
+    topic VARCHAR(30),
+    invited VARCHAR(150) -- List of ids. Should be separate table, but did it like this, to simplify the DB.
+    -- In case it's wrong and you need a separate table - add it.
+);
+
+CREATE TABLE food(
+    name VARCHAR(30) PRIMARY KEY,
+    amount INT,
+    supplier VARCHAR(30),
+    can_be_allergic BIT -- Boolean
+);
+
+CREATE TABLE CCTV_rec(
+    date DATE,
+    camera_num INT,
+    PRIMARY KEY(date, camera_num)
+);
+
+CREATE TABLE event( -- To be displayed at the noticeboard
+    person INT,
+    title VARCHAR(40),
+    FOREIGN KEY (person) REFERENCES person(id)
+);
+
+CREATE TABLE notification( -- To be displayed at the noticeboard
+    person INT,
+    topic VARCHAR(40),
+    FOREIGN KEY (person) REFERENCES person(id)
+);
+
+CREATE TABLE invoice( -- To be displayed at the noticeboard
+    id INT UNIQUE,
+    date DATE,
+    amount INT,
+    subject VARCHAR(50),
+    debtor INT,
+    FOREIGN KEY (debtor) REFERENCES person(id)
+);
+
+CREATE TABLE email(
+    date DATE,
+    sent INT,
+    recived INT,
+    FOREIGN KEY (sent) REFERENCES person(id),
+    FOREIGN KEY (recived) REFERENCES person(id)
+);
+
+CREATE TABLE request_med(
+    date DATE PRIMARY KEY,
+    med VARCHAR(30),
+    requester INT,
+    amount INT,
+    FOREIGN KEY (med) REFERENCES medicine(name),
+    FOREIGN KEY (requester) REFERENCES staff_member(id)
+);
+
+CREATE TABLE request_food(
+    date DATE PRIMARY KEY,
+    food VARCHAR(30),
+    amount INT,
+    FOREIGN KEY (food) REFERENCES food(name)
+);
+
+CREATE TABLE depaertement(
+    id INT PRIMARY KEY,
+    name VARCHAR(30)
+);
+
+CREATE TABLE lab(
+    id INT PRIMARY KEY,
+    name VARCHAR(30)
 );
