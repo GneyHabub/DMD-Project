@@ -1,5 +1,13 @@
 -- /Users/gneyhabub/Documents/GitHub/DMD-Project/index.sql
 -- If u find any misspelling, just fix it
+-- If u find any incosistency or bag, just fix it)
+-- In oreder to run this file, you need to drop every table and then create again,
+-- that's why here is this big block of drops))))))
+
+DROP TABLE emergency_appointment;
+DROP TABLE doctors_schedule;
+DROP TABLE nurses_schedule;
+DROP TABLE priests_schedule;
 DROP TABLE feedback;
 DROP TABLE surgery;
 DROP TABLE meds_for_surgery;
@@ -7,20 +15,15 @@ DROP TABLE doctors_report;
 DROP TABLE medical_history;
 DROP TABLE staff_meeting;
 DROP TABLE CCTV_rec;
-DROP TABLE event;
-DROP TABLE notification;
 DROP TABLE invoice;
 DROP TABLE email;
 DROP TABLE request_med;
 DROP TABLE request_food;
-DROP TABLE departement;
 DROP TABLE lab;
-DROP TABLE food;
 DROP TABLE medicine;
 DROP TABLE contact_details;
 DROP TABLE head_doctor;
 DROP TABLE reseptionist;
-DROP TABLE maintanence_worker;
 DROP TABLE cleaning_team_worker;
 DROP TABLE security_team_member;
 DROP TABLE hr;
@@ -29,7 +32,6 @@ DROP TABLE cook;
 DROP TABLE priest;
 DROP TABLE head_nurse;
 DROP TABLE nurse;
-DROP TABLE IT_specialist;
 DROP TABLE proff;
 DROP TABLE doc_education;
 DROP TABLE patients_address;
@@ -38,9 +40,16 @@ DROP TABLE appointment;
 DROP TABLE patient_complaint;
 DROP TABLE IT_complaint;
 DROP TABLE staff_complaint;
+DROP TABLE maintanence_worker;
+DROP TABLE IT_specialist;
 DROP TABLE staff_member;
 DROP TABLE patient;
 DROP TABLE doctor;
+DROP TABLE food;
+DROP TABLE departement;
+DROP TABLE notification;
+DROP TABLE display_event;
+DROP TABLE event;
 DROP TABLE person;
 
 CREATE TABLE person(
@@ -191,13 +200,13 @@ CREATE TABLE patient(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
     registration_date DATE NOT NULL default now(),
-    allergies VARCHAR(100), -- multivalued
+    allergies TEXT, -- multivalued
     occupation VARCHAR(50)
 );
 
 CREATE TABLE patients_address(
-    id INT,
-    FOREIGN KEY(id) REFERENCES patient(id),
+    patient INT,
+    FOREIGN KEY (patient) REFERENCES patient(id),
     country VARCHAR(30) default 'Russian Federation',
     district VARCHAR(40) default 'Tatarstan',
     city VARCHAR(20) default 'Innopolis',
@@ -216,6 +225,7 @@ CREATE TABLE lab_technician(
 
 CREATE TABLE appointment(
     id INT PRIMARY KEY,
+    time TIME,
     date DATE,
     patient_id INT,
     doctor_id INT,
@@ -227,7 +237,7 @@ CREATE TABLE patient_complaint(
     id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
-    subjectr VARCHAR(150),
+    subjectr TEXT,
     patient_id INT,
     FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
@@ -236,7 +246,7 @@ CREATE TABLE IT_complaint(
     id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
-    subjectr VARCHAR(150),
+    subjectr TEXT,
     person INT,
     responsible INT,
     FOREIGN KEY (person) REFERENCES person(id),
@@ -247,7 +257,7 @@ CREATE TABLE staff_complaint(
     id INT PRIMARY KEY,
     submitted DATE,
     resolved DATE,
-    subjectr VARCHAR(150),
+    subjectr TEXT,
     staff_id INT,
     responsible INT,
     FOREIGN KEY (staff_id) REFERENCES staff_member(id),
@@ -278,25 +288,31 @@ CREATE TABLE meds_for_surgery(
 
 CREATE TABLE doctors_report(
     appointment INT,
-    text VARCHAR(150),
+    text TEXT,
     FOREIGN KEY (appointment) REFERENCES appointment(id)
 );
 
 CREATE TABLE medical_history(
     patient INT,
     date DATE,
-    record VARCHAR(200),
+    record TEXT,
     FOREIGN KEY (patient) REFERENCES patient(id)
 );
 
--- CREATE TABLE emergency_appointment(
-
--- );
+CREATE TABLE emergency_appointment(
+    id INT PRIMARY KEY,
+    time TIME,
+    date DATE,
+    patient INT,
+    doctor INT,
+    FOREIGN KEY (patient) REFERENCES patient(id),
+    FOREIGN KEY (doctor) REFERENCES doctor(id)
+);
 
 CREATE TABLE staff_meeting(
     date DATE PRIMARY KEY,
     topic VARCHAR(30),
-    invited VARCHAR(150) -- List of ids. Should be separate table, but did it like this, to simplify the DB.
+    invited TEXT -- List of ids. Should be separate table, but did it like this, to simplify the DB.
     -- In case it's wrong and you need a separate table - add it.
 );
 
@@ -335,13 +351,14 @@ CREATE TABLE invoice( -- To be displayed at the noticeboard
     id INT UNIQUE,
     date DATE,
     amount INT,
-    subject VARCHAR(50),
+    subject TEXT,
     debtor INT,
     FOREIGN KEY (debtor) REFERENCES person(id)
 );
 
 CREATE TABLE email(
     date DATE,
+    time TIME,
     sent INT,
     recived INT,
     FOREIGN KEY (sent) REFERENCES person(id),
@@ -371,12 +388,10 @@ CREATE TABLE lab(
     FOREIGN KEY (departement) REFERENCES departement(id)
 );
 
------------------------------------__!!!!!!----!_!_!_
-
 CREATE TABLE feedback(
     patient INT,
     doctor INT,
-    text VARCHAR(200),
+    text TEXT,
     FOREIGN KEY (patient) REFERENCES patient(id), 
     FOREIGN KEY (doctor) REFERENCES doctor(id)
 );
