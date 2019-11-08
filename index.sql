@@ -1,5 +1,6 @@
 -- /Users/gneyhabub/Documents/GitHub/DMD-Project/index.sql
-
+-- If u find any misspelling, just fix it
+DROP TABLE feedback;
 DROP TABLE surgery;
 DROP TABLE meds_for_surgery;
 DROP TABLE doctors_report;
@@ -12,7 +13,7 @@ DROP TABLE invoice;
 DROP TABLE email;
 DROP TABLE request_med;
 DROP TABLE request_food;
-DROP TABLE depaertement;
+DROP TABLE departement;
 DROP TABLE lab;
 DROP TABLE food;
 DROP TABLE medicine;
@@ -72,6 +73,11 @@ CREATE TABLE staff_member(
     room VARCHAR(10)
 );
 
+CREATE TABLE departement(
+    id INT PRIMARY KEY,
+    name VARCHAR(30)
+);
+
 CREATE TABLE head_doctor(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
@@ -81,7 +87,8 @@ CREATE TABLE head_doctor(
 CREATE TABLE reseptionist(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
-    spoken_languages VARCHAR(100) default 'English' -- The same as in full name. we either crewate a new table, or just make it string.
+    spoken_languages VARCHAR(100) default 'English' -- The same as in full name. 
+    -- We either crewate a new table, or just make it string.
 );
 
 CREATE TABLE maintanence_worker(
@@ -140,7 +147,9 @@ CREATE TABLE nurse(
     FOREIGN KEY(id) REFERENCES person(id),
     surgery_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist in surgeries
     preferred_shifts VARCHAR(5), -- 'Night' or 'Day' only
-    appointment_assistant BIT NOT NULL -- Whether or not he/she sometimes assist during appointments
+    appointment_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist during appointments
+    departement INT,
+    FOREIGN KEY (departement) REFERENCES departement(id)
 );
 
 CREATE TABLE IT_specialist(
@@ -153,7 +162,9 @@ CREATE TABLE proff(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
     reasearch_topic VARCHAR(50),
-    surgery_participation BIT NOT NULL
+    surgery_participation BIT NOT NULL,
+    departement INT,
+    FOREIGN KEY (departement) REFERENCES departement(id)
 );
 
 CREATE TABLE doctor(
@@ -161,7 +172,11 @@ CREATE TABLE doctor(
     FOREIGN KEY(id) REFERENCES person(id),
     speciality VARCHAR(30),
     emergency_hours BIT NOT NULL, -- Has them or not
-    experience INT default 0 -- Number of years in the industry
+    experience INT default 0, -- Number of years in the industry
+    departement INT,
+    supervisor INT,
+    FOREIGN KEY (departement) REFERENCES departement(id),
+    FOREIGN KEY (supervisor) REFERENCES doctor(id)
 );
 
 CREATE TABLE doc_education(
@@ -194,7 +209,9 @@ CREATE TABLE patients_address(
 CREATE TABLE lab_technician(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
-    education_level VARCHAR (15) -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
+    education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
+    departement INT,
+    FOREIGN KEY (departement) REFERENCES departement(id)
 );
 
 CREATE TABLE appointment(
@@ -220,8 +237,10 @@ CREATE TABLE IT_complaint(
     submitted DATE,
     resolved DATE,
     subjectr VARCHAR(150),
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES person(id)
+    person INT,
+    responsible INT,
+    FOREIGN KEY (person) REFERENCES person(id),
+    FOREIGN KEY (responsible) REFERENCES IT_specialist(id)
 );
 
 CREATE TABLE staff_complaint(
@@ -230,10 +249,10 @@ CREATE TABLE staff_complaint(
     resolved DATE,
     subjectr VARCHAR(150),
     staff_id INT,
-    FOREIGN KEY (staff_id) REFERENCES staff_member(id)
+    responsible INT,
+    FOREIGN KEY (staff_id) REFERENCES staff_member(id),
+    FOREIGN KEY (responsible) REFERENCES maintanence_worker(id)
 );
-
---------------------------------------------------------------------
 
 CREATE TABLE medicine(
     name VARCHAR(30) PRIMARY KEY,
@@ -294,10 +313,16 @@ CREATE TABLE CCTV_rec(
     PRIMARY KEY(date, camera_num)
 );
 
-CREATE TABLE event( -- To be displayed at the noticeboard
+CREATE TABLE event(
+    id INT PRIMARY KEY,
+    title VARCHAR(40)
+);
+
+CREATE TABLE display_event( -- In the noticeboard
     person INT,
-    title VARCHAR(40),
-    FOREIGN KEY (person) REFERENCES person(id)
+    event INT,
+    FOREIGN KEY (person) REFERENCES person(id),
+    FOREIGN KEY (event) REFERENCES event(id)
 );
 
 CREATE TABLE notification( -- To be displayed at the noticeboard
@@ -339,12 +364,40 @@ CREATE TABLE request_food(
     FOREIGN KEY (food) REFERENCES food(name)
 );
 
-CREATE TABLE depaertement(
-    id INT PRIMARY KEY,
-    name VARCHAR(30)
-);
-
 CREATE TABLE lab(
     id INT PRIMARY KEY,
-    name VARCHAR(30)
+    name VARCHAR(30),
+    departement INT,
+    FOREIGN KEY (departement) REFERENCES departement(id)
+);
+
+-----------------------------------__!!!!!!----!_!_!_
+
+CREATE TABLE feedback(
+    patient INT,
+    doctor INT,
+    text VARCHAR(200),
+    FOREIGN KEY (patient) REFERENCES patient(id), 
+    FOREIGN KEY (doctor) REFERENCES doctor(id)
+);
+
+CREATE TABLE doctors_schedule(
+    nurse INT,
+    doctor INT,
+    date DATE,
+    FOREIGN KEY (nurse) REFERENCES nurse(id),
+    FOREIGN KEY (doctor) REFERENCES doctor(id)
+);
+
+CREATE TABLE nurses_schedule(
+    nurse INT,
+    date DATE,
+    shift VARCHAR(6), -- 'Day" or 'Night'
+    FOREIGN KEY (nurse) REFERENCES nurse(id)
+);
+
+CREATE TABLE priests_schedule(
+    date DATE,
+    patient INT,
+    FOREIGN KEY (patient) REFERENCES patient(id)
 );
