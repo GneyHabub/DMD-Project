@@ -1,4 +1,4 @@
--- /Users/gneyhabub/Documents/GitHub/DMD-Project/index.sql
+
 -- If u find any misspelling, just fix it
 -- If u find any incosistency or bag, just fix it)
 -- In oreder to run this file, you need to drop every table and then create again,
