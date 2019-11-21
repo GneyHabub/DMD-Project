@@ -94,41 +94,48 @@ class DB:
             contact_details[i]["telegram"] = "@"+profile["username"]
             contact_details[i]["other"] = "".join(self.fake.random_letters(length=30) if i%5 else "")
             
+            # IT_complaint
+
+
             #reseptionist, maintanence_worker, cleaning_team_worker, security_team_member, hr, pharmasist,
             # cook, priest, nurse, IT_specialist, prof, doctor, patient, lab_technician
             person_type_selector = np.random.choice(13,1,p=[0.2,0.15,0.2,0.1,0.05,0.05,0.05,0.05,0.04,0.03,0.03,0.03,0.02])
             if(i == 0):
-                pass    # head doctor
+                pass    # head doctor, staff_meeting
             elif(i == 1):
                 pass    # head nurse
-            elif(person_type_selector == 0):
-                pass # nurse
-            elif(person_type_selector == 1):
-                pass # doctor
-            elif(person_type_selector == 2):
-                pass # patient
-            elif(person_type_selector == 3):
-                pass # prof
-            elif(person_type_selector == 4):
-                pass # lab_technician
-            elif(person_type_selector == 5):
-                pass #cleaning_team_worker
-            elif(person_type_selector == 6):
-                pass #reseptionist
-            elif(person_type_selector == 7):
-                pass #maintanence_worker
-            elif(person_type_selector == 8):
-                pass #security_team_member
-            elif(person_type_selector == 9):
-                pass #hr
-            elif(person_type_selector == 10):
-                pass #pharmasist
-            elif(person_type_selector == 11):
-                pass #cook
-            elif(person_type_selector == 12):
-                pass #IT_specialist
-            elif(person_type_selector == 13):
-                pass #priest
+            if(person_type_selector == 2):
+                pass # patient, patients_address, , medical_history
+            else:
+                # staff_member
+                if(person_type_selector == 0):
+                    pass # nurse
+                elif(person_type_selector == 1):
+                    pass # doctor
+                elif(person_type_selector == 3):
+                    pass # prof
+                elif(person_type_selector == 4):
+                    pass # lab_technician
+                elif(person_type_selector == 5):
+                    pass #cleaning_team_worker
+                elif(person_type_selector == 6):
+                    pass #reseptionist
+                elif(person_type_selector == 7):
+                    pass #maintanence_worker
+                elif(person_type_selector == 8):
+                    pass #security_team_member
+                elif(person_type_selector == 9):
+                    pass #hr
+                elif(person_type_selector == 10):
+                    pass #pharmasist
+                elif(person_type_selector == 11):
+                    pass #cook
+                elif(person_type_selector == 12):
+                    pass #IT_specialist
+                elif(person_type_selector == 13):
+                    pass #priest
+            
+           
             if(write_schema_flag):
                 with open('data/person.sql', 'a+') as append_file:
                     append_file.write("\nINSERT INTO person VALUES ({:}, '{:}', '{:}', '{:}', '{:}','{:}','{:}',{:},{:});".format(person[i]["id"],person[i]["full_name"],person[i]["email"],person[i]["user_login"],person[i]["user_password"],person[i]["sex"],person[i]["date_of_birth"],person[i]["age"],person[i]["permission_level"]))
@@ -136,7 +143,30 @@ class DB:
             if(write_schema_flag):
                 with open('data/contact_details.sql', 'a+') as append_file:
                     append_file.write("\nINSERT INTO contact_details VALUES ({:}, '{:}', '{:}', '{:}');".format(contact_details[i]["id"],contact_details[i]["phone"],contact_details[i]["telegram"],contact_details[i]["other"]))
-
+        # departement
+        # doc_education
+        # medicine
+        # meds_for_surgery
+        # CCTV_rec
+        # food
+        # doctors_report
+        # surgery
+        # event
+        # staff_complaint
+        # patient_complaint
+        # appointment
+        # emergency_appointment
+        # display_event
+        # notification
+        # invoice
+        # email
+        # request_med
+        # request_food
+        # lab
+        # feedback
+        # doctors_schedule
+        # nurses_schedule
+        # priests_schedule
         if(write_json_flag):
             with open('data/person.csv', 'w') as writeFile:
                 writer = csv.DictWriter(writeFile, fieldnames=list(person[0].keys()))
