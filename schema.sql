@@ -409,10 +409,17 @@ CREATE TABLE nurses_schedule(
     date DATE,
     shift VARCHAR(6), -- 'Day" or 'Night'
     FOREIGN KEY (nurse) REFERENCES nurse(id)
-);
+);  
 
 CREATE TABLE priests_schedule(
     date DATE,
     patient INT,
     FOREIGN KEY (patient) REFERENCES patient(id)
 );
+
+
+
+
+
+
+----------------------------------------------------------------

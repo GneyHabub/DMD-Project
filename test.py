@@ -36,22 +36,31 @@ def test_faking_data():
     #https://www.geeksforgeeks.org/python-faker-library/
     from faker import Faker
     import json
+    import csv
+    from DB import DB
     fake = Faker()
-    print(fake.name())
-    print(fake.random_int(min=0, max=5, step=1))
-    
-    print(fake.email())
-    print(fake.profile())
+    person = [] 
+    for i in range(0, 5): 
+        person.append({})
+        profile = fake.profile()
+        person[i]["id"]= fake.random_int(1, 1000) 
+        person[i]["full_name"]= profile["name"]
+        person[i]["email"] = profile["mail"]
+        person[i]["user_login"] = profile["username"]
+        person[i]["user_password"] = "".join(fake.random_letters(length=fake.random_int(7, 15)))
+        person[i]["sex"] = profile["sex"]
+        person[i]["date_of_birth"] = profile["birthdate"]
+        person[i]["age"] = 2019 - person[i]["date_of_birth"].year
+        person[i]["permission_level"] = fake.random_int(1, 5)
+    print(person) 
+    with open('person.csv', 'w') as writeFile:
+        writer = csv.DictWriter(writeFile, fieldnames=list(person[0].keys()))
+        writer.writeheader()
+        for data in person:
+            writer.writerow(data)
 
-    # data ={} 
-    # for i in range(0, x): 
-    #     data[i]={} 
-    #     data[i]['id']= fake.random_int(1, 100) 
-    #     data[i]['name']= fake.name() 
-    #     data[i]['address']= fake.address() 
-    #     data[i]['latitude']= str(fake.latitude()) 
-    #     data[i]['longitude']= str(fake.longitude()) 
-    # print(data) 
+    db = DB()
+    db.
   
     # dictionary dumped as json in a json file 
     # with open('data.json', 'w') as fp: 
