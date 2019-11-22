@@ -14,3 +14,8 @@ INSERT INTO person VALUES (640, 'Glenn Hall', 'michele54@gmail.com', 'john74', '
 INSERT INTO person VALUES (618, 'Angel Chapman MD', 'claytonalbert@gmail.com', 'rsmith', 'cuRwNLLiGaMVfh','M','1991-08-25',28,2);
 INSERT INTO person VALUES (402, 'Deborah Mcmahon', 'phillipsgregory@yahoo.com', 'timothyhill', 'OKnExcNE','F','2013-01-20',6,3);
 INSERT INTO person VALUES (86, 'Linda Gomez', 'bruce94@yahoo.com', 'ariel60', 'XSzifoqgoe','F','2013-09-11',6,4);
+INSERT INTO person VALUES (198, 'Michelle Garcia', 'david34@hotmail.com', 'cstewart', 'LMOgreEqn','F','2017-04-11',2,5);
+INSERT INTO person VALUES (1000, 'Nicole Cortez', 'ericawright@gmail.com', 'danielledeleon', 'aYUunJRAD','F','1969-02-03',50,5);
+INSERT INTO person VALUES (192, 'Tyler Hunt', 'jane36@hotmail.com', 'ksmith', 'IAOToEAKwpN','M','1954-12-16',65,2);
+INSERT INTO person VALUES (895, 'Chad Garza', 'jonesrobert@gmail.com', 'mcdanieltamara', 'tAyEFqVaXeD','M','1954-04-21',65,4);
+INSERT INTO person VALUES (169, 'Jennifer Carter', 'jeffrey74@hotmail.com', 'amandabryant', 'hSLmmulffNObeXi','F','2014-04-09',5,2);

@@ -14,3 +14,8 @@ INSERT INTO contact_details VALUES (640, '660.543.4695x96786', '@john74', 'ZpnoF
 INSERT INTO contact_details VALUES (618, '369-709-9476', '@rsmith', 'OHdYttcnQGEcNOCCmLVirmIRSNzYEO');
 INSERT INTO contact_details VALUES (402, '(814)297-0954x5705', '@timothyhill', 'GKDsCnevYczKtNtsfeBAaQKscnZhOl');
 INSERT INTO contact_details VALUES (86, '001-368-705-2803x548', '@ariel60', 'OIwcaTdzQUOXYVQEXreublTnJiymIF');
+INSERT INTO contact_details VALUES (198, '1229822679', '@cstewart', '');
+INSERT INTO contact_details VALUES (1000, '163-382-2228x2809', '@danielledeleon', 'hZMNJnoXKNwmBtKZlgaAuFrzyZgyzK');
+INSERT INTO contact_details VALUES (192, '001-534-206-1944x438', '@ksmith', 'nFyKnJrHHdxOMixEzlghsBlBOyNQpB');
+INSERT INTO contact_details VALUES (895, '(236)945-2160', '@mcdanieltamara', 'BMweafHoycoWUQENpguFihoFiDkVRc');
+INSERT INTO contact_details VALUES (169, '483.924.7422', '@amandabryant', 'dxbwxLBWBCxPzqWJOotcseqhOdBRTb');

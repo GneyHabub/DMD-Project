@@ -50,6 +50,9 @@ DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS display_event;
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS patient_allergies;
+DROP TABLE IF EXISTS languages_spoken;
+DROP TABLE IF EXISTS invited;
 
 CREATE TABLE person(
     id INT PRIMARY KEY NOT NULL UNIQUE,
@@ -283,9 +286,9 @@ CREATE TABLE surgery(
 );
 
 CREATE TABLE meds_for_surgery(
-    surgery INT,
+    surgery_id INT,
     med VARCHAR(30),
-    FOREIGN KEY (doctor_id) REFERENCES surgery(id),
+    FOREIGN KEY (surgery_id) REFERENCES surgery(id),
     FOREIGN KEY (med) REFERENCES medicine(name)
 );
 
@@ -429,5 +432,5 @@ CREATE TABLE patient_allergies(
     patient_id INT,
     preparate VARCHAR(30),
     FOREIGN KEY(patient_id) REFERENCES patient(id),
-    FOREIGN KEY(preparate) REFERENCES madicine(name)
+    FOREIGN KEY(preparate) REFERENCES medicine(name)
 );

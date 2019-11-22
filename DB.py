@@ -8,7 +8,7 @@ import numpy as np
 
 
 class DB:
-    def __init__(self,user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "postgres"):
+    def __init__(self,user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "postgres1"):
         self.fake = Faker()
         self.connection = psycopg2.connect( user = user,
                                             password = password,
@@ -183,5 +183,5 @@ class DB:
         
 if __name__ == "__main__":
     db = DB()
-    db.generate("person",write_schema_flag=True)
-    db.load_db(["person.csv","contact_details.csv"])
+    # db.generate("person",write_schema_flag=True)
+    # db.load_db(["person.csv","contact_details.csv"])
