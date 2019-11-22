@@ -1,4 +1,3 @@
-
 -- If u find any misspelling, just fix it
 -- If u find any incosistency or bag, just fix it)
 -- In oreder to run this file, you need to drop every table and then create again,
@@ -54,7 +53,8 @@ DROP TABLE IF EXISTS person;
 
 CREATE TABLE person(
     id INT PRIMARY KEY NOT NULL UNIQUE,
-    full_name VARCHAR(50) NOT NULL, -- Supposed to ba composite, but SQL doesn't support it, so let it be just a string
+    first_name VARCHAR(50) NOT NULL,
+    second_name VARCHAR(50) NOT NULL,
     email VARCHAR(50),
     user_login VARCHAR(30) NOT NULL default 'login',
     user_password VARCHAR(30) NOT NULL default '12345',
@@ -89,71 +89,75 @@ CREATE TABLE departement(
 
 CREATE TABLE head_doctor(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     primary_speciality VARCHAR(20)
 );
 
 CREATE TABLE reseptionist(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
-    spoken_languages VARCHAR(100) default 'English' -- The same as in full name. 
-    -- We either crewate a new table, or just make it string.
+    FOREIGN KEY(id) REFERENCES staff_member(id)
+);
+
+CREATE TABLE languages_spoken(
+    reseptionist_id INT,
+    language VARCHAR(100),
+    FOREIGN KEY(reseptionist_id) REFERENCES reseptionist(id)
 );
 
 CREATE TABLE maintanence_worker(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     employment_type VARCHAR(9) NOT NULL, -- Strictly 'Part time' or 'Full time' only
     speciality VARCHAR(100) -- Composite again
 );
 
 CREATE TABLE cleaning_team_worker(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     employment_type VARCHAR(9) -- Strictly 'Part time' or 'Full time' only
 );
 
 CREATE TABLE security_team_member(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     shifts VARCHAR(5) NOT NULL, -- 'Night' or 'Day' only
     physical_test_grade VARCHAR(1) -- A, B, C or D
 );
 
 CREATE TABLE hr(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     selection_responsibility VARCHAR(10)-- Strictly 'Interview' or 'Review' only
 );
 
 CREATE TABLE pharmasist(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
     reasearch BIT NOT NULL-- Analogus to Boolean. 1 - True, 0 - False
 );
 
 CREATE TABLE cook(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     experience INT -- Years
 );
 
 CREATE TABLE priest(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     religion VARCHAR(15)
 );
 
 CREATE TABLE head_nurse(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     surgery_assistant BIT NOT NULL -- Whether or not he/she sometimes assist in surgeries
 );
 
 CREATE TABLE nurse(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     surgery_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist in surgeries
     preferred_shifts VARCHAR(5), -- 'Night' or 'Day' only
     appointment_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist during appointments
@@ -163,13 +167,13 @@ CREATE TABLE nurse(
 
 CREATE TABLE IT_specialist(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     support_line BIT NOT NULL
 );
 
 CREATE TABLE professor(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     reasearch_topic VARCHAR(50),
     surgery_participation BIT NOT NULL,
     departement_id INT,
@@ -178,7 +182,7 @@ CREATE TABLE professor(
 
 CREATE TABLE doctor(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     speciality VARCHAR(30),
     emergency_hours BIT NOT NULL, -- Has them or not
     experience INT default 0, -- Number of years in the industry
@@ -200,7 +204,6 @@ CREATE TABLE patient(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
     registration_date DATE NOT NULL default now(),
-    allergies TEXT, -- multivalued
     occupation VARCHAR(50)
 );
 
@@ -217,7 +220,7 @@ CREATE TABLE patients_address(
 
 CREATE TABLE lab_technician(
     id INT UNIQUE,
-    FOREIGN KEY(id) REFERENCES person(id),
+    FOREIGN KEY(id) REFERENCES staff_member(id),
     education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
     departement_id INT,
     FOREIGN KEY (departement_id) REFERENCES departement(id)
@@ -280,9 +283,9 @@ CREATE TABLE surgery(
 );
 
 CREATE TABLE meds_for_surgery(
-    doctor_id INT,
+    surgery INT,
     med VARCHAR(30),
-    FOREIGN KEY (doctor_id) REFERENCES doctor(id),
+    FOREIGN KEY (doctor_id) REFERENCES surgery(id),
     FOREIGN KEY (med) REFERENCES medicine(name)
 );
 
@@ -311,9 +314,14 @@ CREATE TABLE emergency_appointment(
 
 CREATE TABLE staff_meeting(
     date DATE PRIMARY KEY,
-    topic VARCHAR(30),
-    invited TEXT -- List of ids. Should be separate table, but did it like this, to simplify the DB.
-    -- In case it's wrong and you need a separate table - add it.
+    topic VARCHAR(30)
+);
+
+CREATE TABLE invited(
+    staff_member_id INT,
+    meeting DATE,
+    FOREIGN KEY (staff_member_id) REFERENCES staff_member(id),
+    FOREIGN KEY (meeting) REFERENCES staff_meeting(date)
 );
 
 CREATE TABLE food(
@@ -417,9 +425,9 @@ CREATE TABLE priests_schedule(
     FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
-
-
-
-
-
-----------------------------------------------------------------
+CREATE TABLE patient_allergies(
+    patient_id INT,
+    preparate VARCHAR(30),
+    FOREIGN KEY(patient_id) REFERENCES patient(id),
+    FOREIGN KEY(preparate) REFERENCES madicine(name)
+);
