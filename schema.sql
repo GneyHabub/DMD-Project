@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS cook;
 DROP TABLE IF EXISTS priest;
 DROP TABLE IF EXISTS head_nurse;
 DROP TABLE IF EXISTS nurse;
-DROP TABLE IF EXISTS proff;
+DROP TABLE IF EXISTS professor;
 DROP TABLE IF EXISTS doc_education;
 DROP TABLE IF EXISTS patients_address;
 DROP TABLE IF EXISTS lab_technician;
@@ -157,8 +157,8 @@ CREATE TABLE nurse(
     surgery_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist in surgeries
     preferred_shifts VARCHAR(5), -- 'Night' or 'Day' only
     appointment_assistant BIT NOT NULL, -- Whether or not he/she sometimes assist during appointments
-    departement INT,
-    FOREIGN KEY (departement) REFERENCES departement(id)
+    departement_id INT,
+    FOREIGN KEY (departement_id) REFERENCES departement(id)
 );
 
 CREATE TABLE IT_specialist(
@@ -167,13 +167,13 @@ CREATE TABLE IT_specialist(
     support_line BIT NOT NULL
 );
 
-CREATE TABLE proff(
+CREATE TABLE professor(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
     reasearch_topic VARCHAR(50),
     surgery_participation BIT NOT NULL,
-    departement INT,
-    FOREIGN KEY (departement) REFERENCES departement(id)
+    departement_id INT,
+    FOREIGN KEY (departement_id) REFERENCES departement(id)
 );
 
 CREATE TABLE doctor(
@@ -182,16 +182,16 @@ CREATE TABLE doctor(
     speciality VARCHAR(30),
     emergency_hours BIT NOT NULL, -- Has them or not
     experience INT default 0, -- Number of years in the industry
-    departement INT,
+    departement_id INT,
     supervisor INT,
-    FOREIGN KEY (departement) REFERENCES departement(id),
+    FOREIGN KEY (departement_id) REFERENCES departement(id),
     FOREIGN KEY (supervisor) REFERENCES doctor(id)
 );
 
 CREATE TABLE doc_education(
     id INT,
     FOREIGN KEY(id) REFERENCES doctor(id),
-    univercity VARCHAR(30),
+    university VARCHAR(30),
     graduated DATE,
     degree VARCHAR (10) -- 'Bachelor', 'Magister', 'PhD'
 );
@@ -205,8 +205,8 @@ CREATE TABLE patient(
 );
 
 CREATE TABLE patients_address(
-    patient INT,
-    FOREIGN KEY (patient) REFERENCES patient(id),
+    patient_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
     country VARCHAR(30) default 'Russian Federation',
     district VARCHAR(40) default 'Tatarstan',
     city VARCHAR(20) default 'Innopolis',
@@ -219,8 +219,8 @@ CREATE TABLE lab_technician(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
     education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
-    departement INT,
-    FOREIGN KEY (departement) REFERENCES departement(id)
+    departement_id INT,
+    FOREIGN KEY (departement_id) REFERENCES departement(id)
 );
 
 CREATE TABLE appointment(
@@ -247,9 +247,9 @@ CREATE TABLE IT_complaint(
     submitted DATE,
     resolved DATE,
     subjectr TEXT,
-    person INT,
+    person_id INT,
     responsible INT,
-    FOREIGN KEY (person) REFERENCES person(id),
+    FOREIGN KEY (person_id) REFERENCES person(id),
     FOREIGN KEY (responsible) REFERENCES IT_specialist(id)
 );
 
@@ -287,26 +287,26 @@ CREATE TABLE meds_for_surgery(
 );
 
 CREATE TABLE doctors_report(
-    appointment INT,
+    appointment_id INT,
     text TEXT,
-    FOREIGN KEY (appointment) REFERENCES appointment(id)
+    FOREIGN KEY (appointment_id) REFERENCES appointment(id)
 );
 
 CREATE TABLE medical_history(
-    patient INT,
+    patient_id INT,
     date DATE,
     record TEXT,
-    FOREIGN KEY (patient) REFERENCES patient(id)
+    FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
 CREATE TABLE emergency_appointment(
     id INT PRIMARY KEY,
     time TIME,
     date DATE,
-    patient INT,
-    doctor INT,
-    FOREIGN KEY (patient) REFERENCES patient(id),
-    FOREIGN KEY (doctor) REFERENCES doctor(id)
+    patient_id INT,
+    doctor_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
 CREATE TABLE staff_meeting(
@@ -342,9 +342,9 @@ CREATE TABLE display_event( -- In the noticeboard
 );
 
 CREATE TABLE notification( -- To be displayed at the noticeboard
-    person INT,
+    person_id INT,
     topic VARCHAR(40),
-    FOREIGN KEY (person) REFERENCES person(id)
+    FOREIGN KEY (person_id) REFERENCES person(id)
 );
 
 CREATE TABLE invoice( -- To be displayed at the noticeboard
@@ -384,37 +384,37 @@ CREATE TABLE request_food(
 CREATE TABLE lab(
     id INT PRIMARY KEY,
     name VARCHAR(30),
-    departement INT,
-    FOREIGN KEY (departement) REFERENCES departement(id)
+    departement_id INT,
+    FOREIGN KEY (departement_id) REFERENCES departement(id)
 );
 
 CREATE TABLE feedback(
-    patient INT,
-    doctor INT,
+    patient_id INT,
+    doctor_id INT,
     text TEXT,
-    FOREIGN KEY (patient) REFERENCES patient(id), 
-    FOREIGN KEY (doctor) REFERENCES doctor(id)
+    FOREIGN KEY (patient_id) REFERENCES patient(id), 
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
 CREATE TABLE doctors_schedule(
-    nurse INT,
-    doctor INT,
+    nurse_id INT,
+    doctor_id INT,
     date DATE,
-    FOREIGN KEY (nurse) REFERENCES nurse(id),
-    FOREIGN KEY (doctor) REFERENCES doctor(id)
+    FOREIGN KEY (nurse_id) REFERENCES nurse(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
 CREATE TABLE nurses_schedule(
-    nurse INT,
+    nurse_id INT,
     date DATE,
     shift VARCHAR(6), -- 'Day" or 'Night'
-    FOREIGN KEY (nurse) REFERENCES nurse(id)
+    FOREIGN KEY (nurse_id) REFERENCES nurse(id)
 );  
 
 CREATE TABLE priests_schedule(
     date DATE,
-    patient INT,
-    FOREIGN KEY (patient) REFERENCES patient(id)
+    patient_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
 
