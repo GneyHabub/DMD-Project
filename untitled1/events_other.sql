@@ -1,0 +1,313 @@
+
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-21','Ready see dark go. Material pe');
+INSERT INTO invited (staff_member_id,meeting) VALUES (494,'2019-11-21');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('alfalfa',87,'Jackson-Wong',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-21',62);
+INSERT INTO event (id,title) VALUES (1,'Hope social figure decade always raise f');
+INSERT INTO display_event (person,event) VALUES (271,1);
+INSERT INTO notification (person_id,topic) VALUES (206,'Project build clearly various deal witho');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (1,'2019-12-17',63246,'Argue about claim while discussion daughter watch.',89);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-13',301,398);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-22','Throw perhaps western least sc');
+INSERT INTO invited (staff_member_id,meeting) VALUES (362,'2019-11-22');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('haiku roll',47,'James-Bailey',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-22',81);
+INSERT INTO event (id,title) VALUES (2,'Marriage risk market decision figure fre');
+INSERT INTO display_event (person,event) VALUES (71,1);
+INSERT INTO notification (person_id,topic) VALUES (466,'Responsibility condition tell entire how');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (2,'2019-11-23',9767,'Civil hand western happen successful hit.
+I art argue call gas per left. Figure firm cultural. Full much spend middle thank.',281);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-20',185,442);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-23','Guess believe up firm audience');
+INSERT INTO invited (staff_member_id,meeting) VALUES (56,'2019-11-23');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Italian bread',55,'Baird-Young',B'0');
+INSERT INTO request_food (food,amount) VALUES ('Italian bread',3);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-23',44);
+INSERT INTO event (id,title) VALUES (3,'Tv popular when hot bad question. Others');
+INSERT INTO display_event (person,event) VALUES (480,2);
+INSERT INTO notification (person_id,topic) VALUES (65,'Recently person special actually degree ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (3,'2019-12-14',49328,'Practice development wide again laugh these. Improve office wrong apply life one hotel. Pm floor test wish available writer do.',399);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-03',448,297);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-24','Heart early history.
+Car meet ');
+INSERT INTO invited (staff_member_id,meeting) VALUES (396,'2019-11-24');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Wine',76,'Lewis, Caldwell and Cunningham',B'1');
+INSERT INTO request_food (food,amount) VALUES ('Wine',8);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-24',63);
+INSERT INTO event (id,title) VALUES (4,'Base citizen approach media herself movi');
+INSERT INTO display_event (person,event) VALUES (97,3);
+INSERT INTO notification (person_id,topic) VALUES (149,'Central six sure degree four. Order trea');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (4,'2019-11-26',38218,'Action draw rich perform example character throw us. Finally success technology send. Production material degree worker or news.
+Machine clearly party go life. Game management wear.',425);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-29',344,162);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-25','Down view within argue drive f');
+INSERT INTO invited (staff_member_id,meeting) VALUES (410,'2019-11-25');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Milk',66,'Reyes-Ferrell',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-25',95);
+INSERT INTO event (id,title) VALUES (5,'Some section name process.
+And lawyer me');
+INSERT INTO display_event (person,event) VALUES (411,3);
+INSERT INTO notification (person_id,topic) VALUES (452,'Customer billion money approach movie ro');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (5,'2019-12-22',41325,'Cell degree of pretty find.
+Statement least minute class once fear. Include control list would. Everything report draw can.
+Year though natural few outside according total. Energy able attack.',264);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-28',486,427);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-26','History president security man');
+INSERT INTO invited (staff_member_id,meeting) VALUES (309,'2019-11-26');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('fondu',56,'Powell-Roberson',B'1');
+INSERT INTO request_food (food,amount) VALUES ('fondu',6);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-26',40);
+INSERT INTO event (id,title) VALUES (6,'Fall firm attorney light final. Vote eat');
+INSERT INTO display_event (person,event) VALUES (370,3);
+INSERT INTO notification (person_id,topic) VALUES (228,'Four security small several total availa');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (6,'2019-12-17',80356,'Someone red section room decision visit face.
+Concern read character family describe material. Mr responsibility sense tax.',394);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-21',174,31);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-27','While away really turn. Bar po');
+INSERT INTO invited (staff_member_id,meeting) VALUES (392,'2019-11-27');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Venison',6,'Young LLC',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-27',68);
+INSERT INTO event (id,title) VALUES (7,'Look difference student word thought ind');
+INSERT INTO display_event (person,event) VALUES (478,6);
+INSERT INTO notification (person_id,topic) VALUES (281,'Again reflect few. Attention unit night ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (7,'2019-12-19',7973,'Color west executive when. Inside story join popular now operation subject.
+Over ball seven style. Off finally employee carry finish north. Science into fly local wish agree.',332);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-17',24,153);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-28','Specific hold week win get req');
+INSERT INTO invited (staff_member_id,meeting) VALUES (270,'2019-11-28');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('eggrolls',69,'Perez-Adams',B'1');
+INSERT INTO request_food (food,amount) VALUES ('eggrolls',9);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-28',54);
+INSERT INTO event (id,title) VALUES (8,'Author old concern one role recent pay. ');
+INSERT INTO display_event (person,event) VALUES (43,3);
+INSERT INTO notification (person_id,topic) VALUES (445,'Or early stock company history night. Th');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (8,'2019-12-20',15670,'Address adult similar health evening finish their mean. While such include daughter for national.
+His quite property available pretty service image.',68);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-23',180,196);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-29','System early none dark. Becaus');
+INSERT INTO invited (staff_member_id,meeting) VALUES (429,'2019-11-29');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('dumplings',11,'Brady, Martin and Galvan',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-29',3);
+INSERT INTO event (id,title) VALUES (9,'Today have what hand north.
+Event respon');
+INSERT INTO display_event (person,event) VALUES (183,6);
+INSERT INTO notification (person_id,topic) VALUES (233,'Color relationship particularly. Prevent');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (9,'2019-12-21',2660,'President treat walk garden. Husband bit conference enough fear government act. House woman mission season away.',125);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-06',410,365);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-11-30','Often billion concern as discu');
+INSERT INTO invited (staff_member_id,meeting) VALUES (129,'2019-11-30');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('arugala',90,'Reid Ltd',B'1');
+INSERT INTO request_food (food,amount) VALUES ('arugala',10);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-11-30',30);
+INSERT INTO event (id,title) VALUES (10,'Anyone reason measure floor. Score soldi');
+INSERT INTO display_event (person,event) VALUES (297,9);
+INSERT INTO notification (person_id,topic) VALUES (74,'Son particular value issue production mo');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (10,'2019-11-24',11820,'Role quickly manage candidate. Series common cause ground notice paper.
+Debate song Democrat indicate far. Contain example fire reflect main late professional.',486);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-27',229,117);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-01','Ask morning hard weight. Democ');
+INSERT INTO invited (staff_member_id,meeting) VALUES (47,'2019-12-01');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('kingfish',37,'Mathews-Freeman',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-01',49);
+INSERT INTO event (id,title) VALUES (11,'Western vote blue red truth call. Trial ');
+INSERT INTO display_event (person,event) VALUES (411,10);
+INSERT INTO notification (person_id,topic) VALUES (125,'Kitchen occur want per as note sometimes');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (11,'2019-12-10',50655,'Believe into seem theory situation. Fast watch option almost huge return Congress. Child understand international test experience keep.',127);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-15',355,108);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-02','Laugh night however attack wor');
+INSERT INTO invited (staff_member_id,meeting) VALUES (330,'2019-12-02');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('baked beans',84,'Ware, Ford and Johnson',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-02',38);
+INSERT INTO event (id,title) VALUES (12,'By inside bar large write. Remain thousa');
+INSERT INTO display_event (person,event) VALUES (289,1);
+INSERT INTO notification (person_id,topic) VALUES (312,'Cause other month not western pick drive');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (12,'2019-11-21',81799,'Administration help then fine word yeah box. Position lot skill stay. Charge find shoulder.',176);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-11',100,38);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-03','Safe politics office trial. Si');
+INSERT INTO invited (staff_member_id,meeting) VALUES (350,'2019-12-03');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Quesadilla',11,'Torres, Alvarado and Brown',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-03',17);
+INSERT INTO event (id,title) VALUES (13,'Worker those forget shake nice candidate');
+INSERT INTO display_event (person,event) VALUES (44,8);
+INSERT INTO notification (person_id,topic) VALUES (238,'Defense really smile rate general now. F');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (13,'2019-12-13',13461,'Maintain when represent author us avoid. Likely record natural force money example. Else child prepare list.',465);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-16',492,22);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-04','Analysis want resource every f');
+INSERT INTO invited (staff_member_id,meeting) VALUES (227,'2019-12-04');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('jalapeño',70,'Glover, Adkins and Carr',B'1');
+INSERT INTO request_food (food,amount) VALUES ('jalapeño',9);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-04',91);
+INSERT INTO event (id,title) VALUES (14,'Writer miss serious letter real. Top cus');
+INSERT INTO display_event (person,event) VALUES (278,5);
+INSERT INTO notification (person_id,topic) VALUES (161,'Individual into write couple out everyth');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (14,'2019-12-13',69336,'Determine whole federal decade college. Individual quickly how research.
+However foreign market hope poor. Someone raise high close challenge generation. Base star resource life.',378);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-07',98,310);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-05','Democrat follow race exist now');
+INSERT INTO invited (staff_member_id,meeting) VALUES (56,'2019-12-05');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Linguine',48,'Rodriguez-Barnes',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-05',8);
+INSERT INTO event (id,title) VALUES (15,'Whole particular floor consider eight ce');
+INSERT INTO display_event (person,event) VALUES (495,6);
+INSERT INTO notification (person_id,topic) VALUES (24,'Positive then heavy news. Fill society m');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (15,'2019-11-30',48901,'There eye require western test third sign. Foot style full prepare. Record choose something opportunity letter couple hold.',21);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-01',134,49);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-06','Republican himself happen syst');
+INSERT INTO invited (staff_member_id,meeting) VALUES (367,'2019-12-06');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Garlic',31,'Wagner-Turner',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-06',94);
+INSERT INTO event (id,title) VALUES (16,'Hand usually into by thus. Carry stand o');
+INSERT INTO display_event (person,event) VALUES (290,4);
+INSERT INTO notification (person_id,topic) VALUES (138,'Quality according strong. Window market ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (16,'2019-12-23',28215,'Next none some hospital girl piece class ago. Much one need his eat. Significant visit record.
+Partner white trade age. Page in follow blue.',110);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-19',480,365);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-07','Side early project. No Mr full');
+INSERT INTO invited (staff_member_id,meeting) VALUES (463,'2019-12-07');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Porter',79,'Garcia Inc',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-07',92);
+INSERT INTO event (id,title) VALUES (17,'Rest detail skin subject. Both allow pro');
+INSERT INTO display_event (person,event) VALUES (196,14);
+INSERT INTO notification (person_id,topic) VALUES (84,'Ever level western. How give fact admit ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (17,'2019-12-10',24737,'Camera see tell fall trouble security. Way popular often tonight. Smile better we region easy trial student.
+Together role last save. Throw series word behavior firm strategy.',274);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-06',217,353);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-08','Information may pretty admit i');
+INSERT INTO invited (staff_member_id,meeting) VALUES (370,'2019-12-08');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('corn',42,'Gibson, Myers and Yates',B'0');
+INSERT INTO request_food (food,amount) VALUES ('corn',10);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-08',56);
+INSERT INTO event (id,title) VALUES (18,'Student region kitchen. Relate use start');
+INSERT INTO display_event (person,event) VALUES (101,4);
+INSERT INTO notification (person_id,topic) VALUES (134,'Music why coach then idea. Forget doctor');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (18,'2019-11-26',67948,'Everybody another heavy important. World feel question game blue direction. Action attack whom agreement car hair agency.',151);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-27',164,481);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-09','Ball test idea human this. Att');
+INSERT INTO invited (staff_member_id,meeting) VALUES (450,'2019-12-09');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('franks',57,'Cobb-Dawson',B'1');
+INSERT INTO request_food (food,amount) VALUES ('franks',1);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-09',9);
+INSERT INTO event (id,title) VALUES (19,'Face training good on. Scientist a nor s');
+INSERT INTO display_event (person,event) VALUES (155,9);
+INSERT INTO notification (person_id,topic) VALUES (194,'Television its cultural much decide laug');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (19,'2019-12-03',31360,'Ten lead natural. Him difference you.
+Natural throw American most pressure discover site. Either free least part meet. Friend foot how exist. Marriage build laugh entire range note.',7);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-11',438,456);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-10','Establish meeting adult sudden');
+INSERT INTO invited (staff_member_id,meeting) VALUES (63,'2019-12-10');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('English muffins',51,'Howell and Sons',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-10',48);
+INSERT INTO event (id,title) VALUES (20,'Off way book believe.
+Offer buy out rema');
+INSERT INTO display_event (person,event) VALUES (494,19);
+INSERT INTO notification (person_id,topic) VALUES (37,'Her easy wife political treatment high. ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (20,'2019-11-30',37121,'Reveal travel see industry. Cup onto father product.
+Budget family show stuff. Manager sister site strategy word indicate.
+Student oil condition explain thought.',335);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-19',230,235);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-11','History western culture leave ');
+INSERT INTO invited (staff_member_id,meeting) VALUES (64,'2019-12-11');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Avocado roll',75,'Kennedy, Jones and Warren',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-11',64);
+INSERT INTO event (id,title) VALUES (21,'Professor sit watch including town too. ');
+INSERT INTO display_event (person,event) VALUES (72,11);
+INSERT INTO notification (person_id,topic) VALUES (360,'Size teacher study while. Until teacher ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (21,'2019-12-11',82223,'Fear rule accept feel school might ever. Turn run human factor despite upon.
+Own financial security. Young likely lot find.
+Simply contain whose case receive product. Themselves it job every data.',150);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-20',437,370);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-12','Social of tree food. Father st');
+INSERT INTO invited (staff_member_id,meeting) VALUES (299,'2019-12-12');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('sushi',44,'Stanley-Pierce',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-12',5);
+INSERT INTO event (id,title) VALUES (22,'Better spend often sea. On treat small n');
+INSERT INTO display_event (person,event) VALUES (306,15);
+INSERT INTO notification (person_id,topic) VALUES (381,'Item thank very direction important ten ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (22,'2019-12-18',14595,'Suffer laugh system great feeling several body. Young worry them mean tonight travel wear. Lead situation agency away ask.',195);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-30',351,92);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-13','Dark attention receive less it');
+INSERT INTO invited (staff_member_id,meeting) VALUES (68,'2019-12-13');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('artichoke',22,'Shannon, Jackson and Hill',B'1');
+INSERT INTO request_food (food,amount) VALUES ('artichoke',5);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-13',24);
+INSERT INTO event (id,title) VALUES (23,'Religious year allow admit three measure');
+INSERT INTO display_event (person,event) VALUES (353,4);
+INSERT INTO notification (person_id,topic) VALUES (194,'Southern table arrive deal government no');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (23,'2019-12-09',57581,'Mention away after down. Home be first natural democratic work official. Knowledge your night figure.
+Interesting us indeed. Standard shake everybody pattern half child. Analysis more dinner.',3);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-25',312,90);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-14','Region study lawyer goal. Desc');
+INSERT INTO invited (staff_member_id,meeting) VALUES (400,'2019-12-14');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Bruscetta',49,'Jones and Sons',B'1');
+INSERT INTO request_food (food,amount) VALUES ('Bruscetta',7);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-14',68);
+INSERT INTO event (id,title) VALUES (24,'Build interest result entire four. Secti');
+INSERT INTO display_event (person,event) VALUES (306,7);
+INSERT INTO notification (person_id,topic) VALUES (400,'Free next easy thousand wait good.
+Rich ');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (24,'2019-12-08',61049,'Book special down impact Republican customer include. Task seem American. Believe price citizen affect like pass.
+Language card shake present office chair. Night police official talk factor.',128);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-19',492,459);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-15','Prepare measure all live. Avai');
+INSERT INTO invited (staff_member_id,meeting) VALUES (17,'2019-12-15');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Waffles',33,'Bartlett PLC',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-15',4);
+INSERT INTO event (id,title) VALUES (25,'Return ago kind. Think arrive boy his af');
+INSERT INTO display_event (person,event) VALUES (103,17);
+INSERT INTO notification (person_id,topic) VALUES (450,'Federal energy yourself. General can dif');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (25,'2019-12-16',32768,'Week describe state attorney marriage protect. Maybe shake success detail law identify. Research role political.
+Citizen like tough raise allow four rather. Help instead responsibility player new.',413);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-13',329,54);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-16','Speak cell possible manager de');
+INSERT INTO invited (staff_member_id,meeting) VALUES (358,'2019-12-16');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('Quiche',53,'Tran-Peters',B'0');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-16',2);
+INSERT INTO event (id,title) VALUES (26,'Near with participant pick professional ');
+INSERT INTO display_event (person,event) VALUES (160,22);
+INSERT INTO notification (person_id,topic) VALUES (204,'Image measure religious start. Imagine l');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (26,'2019-11-22',81750,'Sense above society forward. Get society spring about beat rich talk. Thus option daughter bad.
+Military need institution. Smile final dinner than worry another.',359);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-05',286,21);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-17','Policy individual trade mean.
+');
+INSERT INTO invited (staff_member_id,meeting) VALUES (273,'2019-12-17');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('ham',5,'Griffin PLC',B'0');
+INSERT INTO request_food (food,amount) VALUES ('ham',2);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-17',24);
+INSERT INTO event (id,title) VALUES (27,'Receive kid billion use. Here crime perh');
+INSERT INTO display_event (person,event) VALUES (240,2);
+INSERT INTO notification (person_id,topic) VALUES (330,'Generation summer drop natural course on');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (27,'2019-12-11',73896,'Top even daughter. She list network sometimes require director. Answer bit stage together.',491);
+INSERT INTO email (date,sent,recived) VALUES ('2019-11-19',363,16);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-18','Plant week program which wheth');
+INSERT INTO invited (staff_member_id,meeting) VALUES (412,'2019-12-18');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('crab',9,'Rios LLC',B'1');
+INSERT INTO request_food (food,amount) VALUES ('crab',9);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-18',37);
+INSERT INTO event (id,title) VALUES (28,'Rather human stuff goal certain road som');
+INSERT INTO display_event (person,event) VALUES (160,27);
+INSERT INTO notification (person_id,topic) VALUES (17,'Party fact opportunity. Bank history sim');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (28,'2019-12-13',32783,'While couple science between. Offer indicate record well. Will too Democrat knowledge.
+According table than carry act.',19);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-16',212,111);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-19','Girl maybe finish continue ful');
+INSERT INTO invited (staff_member_id,meeting) VALUES (470,'2019-12-19');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('chips',84,'Castillo and Sons',B'1');
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-19',58);
+INSERT INTO event (id,title) VALUES (29,'Establish themselves trial it political ');
+INSERT INTO display_event (person,event) VALUES (239,15);
+INSERT INTO notification (person_id,topic) VALUES (432,'Series keep be article suffer. Finish su');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (29,'2019-12-08',71287,'Thing five hard yet. Fish white explain organization career give. Wish alone wind five sign so term.
+Responsibility from behind adult term me. Gun here improve possible believe reason hair.',478);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-01',305,133);
+INSERT INTO staff_meeting (date,topic) VALUES ('2019-12-20','While art tax let court.
+Almos');
+INSERT INTO invited (staff_member_id,meeting) VALUES (113,'2019-12-20');
+INSERT INTO food (name,amount,supplier,can_be_allergic) VALUES ('edimame',19,'Fisher Group',B'0');
+INSERT INTO request_food (food,amount) VALUES ('edimame',8);
+INSERT INTO CCTV_rec (date,camera_num) VALUES ('2019-12-20',70);
+INSERT INTO event (id,title) VALUES (30,'Social begin create arrive. Culture spor');
+INSERT INTO display_event (person,event) VALUES (445,3);
+INSERT INTO notification (person_id,topic) VALUES (64,'Edge teach contain call system might its');
+INSERT INTO invoice (id,date,amount,subject,debtor) VALUES (30,'2019-11-25',56852,'Couple discover specific watch. Create mention instead on field call now. Citizen sense two early either type middle difference.',341);
+INSERT INTO email (date,sent,recived) VALUES ('2019-12-21',311,413);
