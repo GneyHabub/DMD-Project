@@ -1,0 +1,23 @@
+
+INSERT INTO departement (id,name) VALUES (1,'Radiology');
+INSERT INTO lab (id,name,departement_id) VALUES (1,'Radiology lab1',1);
+INSERT INTO departement (id,name) VALUES (2,'Occupational Therapy');
+INSERT INTO lab (id,name,departement_id) VALUES (4,'Occupational Therapy lab1',2);
+INSERT INTO departement (id,name) VALUES (3,'Chaplaincy');
+INSERT INTO lab (id,name,departement_id) VALUES (7,'Chaplaincy lab1',3);
+INSERT INTO departement (id,name) VALUES (4,'Critical Care');
+INSERT INTO lab (id,name,departement_id) VALUES (10,'Critical Care lab1',4);
+INSERT INTO departement (id,name) VALUES (5,'Gynecology');
+INSERT INTO lab (id,name,departement_id) VALUES (13,'Gynecology lab1',5);
+INSERT INTO departement (id,name) VALUES (6,'Intensive Care Unit');
+INSERT INTO lab (id,name,departement_id) VALUES (16,'Intensive Care Unit lab1',6);
+INSERT INTO departement (id,name) VALUES (7,'Ophthalmology');
+INSERT INTO lab (id,name,departement_id) VALUES (19,'Ophthalmology lab1',7);
+INSERT INTO departement (id,name) VALUES (8,'Diagnostic Imaging');
+INSERT INTO lab (id,name,departement_id) VALUES (22,'Diagnostic Imaging lab1',8);
+INSERT INTO departement (id,name) VALUES (9,'Nutrition');
+INSERT INTO lab (id,name,departement_id) VALUES (25,'Nutrition lab1',9);
+INSERT INTO departement (id,name) VALUES (10,'Gastroenterology');
+INSERT INTO lab (id,name,departement_id) VALUES (28,'Gastroenterology lab1',10);
+INSERT INTO departement (id,name) VALUES (11,'Breast Screening');
+INSERT INTO lab (id,name,departement_id) VALUES (31,'Breast Screening lab1',11);

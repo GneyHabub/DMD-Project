@@ -8,21 +8,21 @@ DROP TABLE IF EXISTS doctors_schedule;
 DROP TABLE IF EXISTS nurses_schedule;
 DROP TABLE IF EXISTS priests_schedule;
 DROP TABLE IF EXISTS feedback;
-DROP TABLE IF EXISTS surgery;
-DROP TABLE IF EXISTS meds_for_surgery;
+DROP TABLE IF EXISTS surgery CASCADE;
+DROP TABLE IF EXISTS meds_for_surgery CASCADE;
 DROP TABLE IF EXISTS doctors_report;
 DROP TABLE IF EXISTS medical_history;
-DROP TABLE IF EXISTS staff_meeting;
+DROP TABLE IF EXISTS staff_meeting CASCADE;
 DROP TABLE IF EXISTS CCTV_rec;
 DROP TABLE IF EXISTS invoice;
 DROP TABLE IF EXISTS email;
 DROP TABLE IF EXISTS request_med;
 DROP TABLE IF EXISTS request_food;
 DROP TABLE IF EXISTS lab;
-DROP TABLE IF EXISTS medicine;
+DROP TABLE IF EXISTS medicine CASCADE;
 DROP TABLE IF EXISTS contact_details;
 DROP TABLE IF EXISTS head_doctor;
-DROP TABLE IF EXISTS reseptionist;
+DROP TABLE IF EXISTS reseptionist CASCADE;
 DROP TABLE IF EXISTS cleaning_team_worker;
 DROP TABLE IF EXISTS security_team_member;
 DROP TABLE IF EXISTS hr;
@@ -41,8 +41,8 @@ DROP TABLE IF EXISTS IT_complaint;
 DROP TABLE IF EXISTS staff_complaint;
 DROP TABLE IF EXISTS maintanence_worker;
 DROP TABLE IF EXISTS IT_specialist;
-DROP TABLE IF EXISTS staff_member;
-DROP TABLE IF EXISTS patient;
+DROP TABLE IF EXISTS staff_member CASCADE;
+DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS doctor;
 DROP TABLE IF EXISTS food;
 DROP TABLE IF EXISTS departement;
@@ -78,7 +78,7 @@ CREATE TABLE contact_details(
 CREATE TABLE staff_member(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
-    position VARCHAR(20),
+    position VARCHAR(50),
     salary INT NOT NULL,
     working_hours VARCHAR,
     employed_since DATE NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE departement(
 CREATE TABLE head_doctor(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES staff_member(id),
-    primary_speciality VARCHAR(20)
+    primary_speciality VARCHAR(50)
 );
 
 CREATE TABLE reseptionist(
@@ -137,7 +137,7 @@ CREATE TABLE pharmasist(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES staff_member(id),
     education_level VARCHAR (15), -- 'Bachelor', 'Magister', 'Postgraduate', 'PhD'
-    reasearch BIT NOT NULL-- Analogus to Boolean. 1 - True, 0 - False
+    research BIT NOT NULL-- Analogus to Boolean. 1 - True, 0 - False
 );
 
 CREATE TABLE cook(
@@ -177,7 +177,7 @@ CREATE TABLE IT_specialist(
 CREATE TABLE professor(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES staff_member(id),
-    reasearch_topic VARCHAR(50),
+    research_topic VARCHAR(50),
     surgery_participation BIT NOT NULL,
     departement_id INT,
     FOREIGN KEY (departement_id) REFERENCES departement(id)
@@ -186,7 +186,7 @@ CREATE TABLE professor(
 CREATE TABLE doctor(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES staff_member(id),
-    speciality VARCHAR(30),
+    speciality VARCHAR(50),
     emergency_hours BIT NOT NULL, -- Has them or not
     experience INT default 0, -- Number of years in the industry
     departement_id INT,
@@ -377,7 +377,7 @@ CREATE TABLE email(
 );
 
 CREATE TABLE request_med(
-    date DATE PRIMARY KEY,
+    date DATE,
     med VARCHAR(30),
     requester INT,
     amount INT,
@@ -386,7 +386,7 @@ CREATE TABLE request_med(
 );
 
 CREATE TABLE request_food(
-    date DATE PRIMARY KEY,
+    date DATE,
     food VARCHAR(30),
     amount INT,
     FOREIGN KEY (food) REFERENCES food(name)
