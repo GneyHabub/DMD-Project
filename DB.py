@@ -57,6 +57,7 @@ class DB:
                             , "Sorafenib", "Stavudine", "Sucralfate", "Sugammadex", "Sunitinib", "Tacrolimus", "Temozolomide", "Teniposide", "Tenofovir", "Thioguanine"
                             , "Thiotepa", "Tobramycin", "Topotecan", "Tretinoin", "Trimethoprim", "Valproic acid", "Vancomycin", "Vinblastine", "Vincristine"
                             , "Voriconazole", "Vorinostat", "Warfarin", "Zidovudine"]
+        
         # Source: http://eatingatoz.com/food-list/
         self.food_list = ["asparagus", "apples", "avacado", "alfalfa", "almond", "arugala", "artichoke", "applesauce", "noodles", "antelope", "tuna", "Apple juice", "Avocado roll", "Bruscetta", "bacon", "black beans", "bagels"
                         , "baked beans", "BBQ", "bison", "barley", "beer", "bisque", "bluefish", "bread", "broccoli", "buritto", "babaganoosh", "Cabbage", "cake", "carrots", "carne asada", "celery", "cheese", "chicken", "catfish", "chips", "chocolate"
@@ -71,6 +72,7 @@ class DB:
         self.valid_IT_id = []
         self.valid_maintanence_id = []
         self.valid_nurse_id = []
+        self.valid_priest_id = []
 
         self.fake = Faker()
         self.connection = psycopg2.connect( user = user,
@@ -376,15 +378,17 @@ class DB:
                     _staff_member_customizer(staff_member, "IT Specialist", 15000, self.fake.random_int(74,77))
                     generated_member["table_name"] = "IT_specialist"
                     generated_member["id"] = staff_member["id"]
-                    generated_member["support_line"] = bool(self.fake.random_int(0,1)) # At least have one year of experience after the graduation as a rule for graduation to work for one year and then they can take their certificate
+                    generated_member["support_line"] = bool(self.fake.random_int(0,1))
                     self.valid_IT_id.append(generated_member["id"])
 
+                # Priest
                 elif(person_type_selector == 13):
-                    _staff_member_customizer(staff_member, "IT Specialist", 15000, self.fake.random_int(78,80))
-                    generated_member["table_name"] = "IT_specialist"
+                    _staff_member_customizer(staff_member, "Priest", 15000, self.fake.random_int(78,80))
+                    generated_member["table_name"] = "priest"
                     generated_member["id"] = staff_member["id"]
-                    generated_member["support_line"] = bool(self.fake.random_int(0,1)) # At least have one year of experience after the graduation as a rule for graduation to work for one year and then they can take their certificate            
-            
+                    generated_member["religion"] = self.fake.random_element(elements=["Judaism", "Christianity", "Islam"])
+                    self.valid_priest_id.append(generated_member["id"])
+
                 elif(person_type_selector == 14):
                     _staff_member_customizer(staff_member, "Doctor Education", 30000, self.fake.random_int(81,85))
                     generated_member["table_name"] = "doc_education"
@@ -543,7 +547,7 @@ class DB:
             elif(selector == 3):
                 schedule["table_name"] = "priests_schedule"
                 schedule["patient_id"] = self.fake.random_element(elements=self.valid_patient_id)
-            
+                schedule["priest_id"] = self.fake.random_element(elements=self.valid_priest_id)
             if(write_schema_flag):
                 with open('data/schedule.sql', 'a+') as append_file:
                     self._generate_sql_schema(schedule, append_file)
