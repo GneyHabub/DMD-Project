@@ -2,9 +2,9 @@ import psycopg2
 
 class Q1:
     @staticmethod
-    def execute():
-        con = psycopg2.connect(database="DMD1", user="postgres", password="CerseiInBlack1012", host="127.0.0.1",
-                               port="5432")
+    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
+        con = psycopg2.connect(database=database, user=user, password=password, host=host,
+                               port=port)
         cur = con.cursor()
         cur.execute("SELECT * FROM person, doctor WHERE doctor.id = person.id AND \
                     (((first_name LIKE 'M%' OR first_name LIKE 'L%')\
@@ -18,9 +18,9 @@ class Q1:
 
 class Q2:
     @staticmethod
-    def execute():
-        con = psycopg2.connect(database="DMD1", user="postgres", password="CerseiInBlack1012", host="127.0.0.1",
-                               port="5432")
+    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
+        con = psycopg2.connect(database=database, user=user, password=password, host=host,
+                               port=port)
         cur = con.cursor()
         cur.execute("SELECT doctor.id, app.time, count(*), (CAST(count(*) as FLOAT)/52), dow as app_avg \
                     FROM doctor, (SELECT *, to_char(date, 'day') as dow FROM appointment) AS app WHERE doctor.id=app.doctor_id AND \
@@ -42,9 +42,9 @@ class Q2:
 
 class Q3:
     @staticmethod
-    def execute():
-        con = psycopg2.connect(database="DMD1", user="postgres", password="CerseiInBlack1012", host="127.0.0.1",
-                               port="5432")
+    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
+        con = psycopg2.connect(database=database, user=user, password=password, host=host,
+                               port=port)
         cur = con.cursor()
         cur.execute("SELECT new_id \
                      FROM(SELECT new_id, count(new_id) as weeks \
@@ -67,9 +67,9 @@ class Q3:
 
 class Q4:
     @staticmethod
-    def execute():
-        con = psycopg2.connect(database="DMD1", user="postgres", password="CerseiInBlack1012", host="127.0.0.1",
-                               port="5432")
+    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
+        con = psycopg2.connect(database=database, user=user, password=password, host=host,
+                               port=port)
         cur = con.cursor()
         cur.execute("SELECT sum(person_charge_2.charge) \
                     FROM\
@@ -99,9 +99,9 @@ class Q4:
 
 class Q5:
     @staticmethod
-    def execute():
-        con = psycopg2.connect(database="DMD1", user="postgres", password="CerseiInBlack1012", host="127.0.0.1",
-                               port="5432")
+    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
+        con = psycopg2.connect(database=database, user=user, password=password, host=host,
+                               port=port)
         cur = con.cursor()
         cur.execute("SELECT new_table_2.id \
                     FROM\

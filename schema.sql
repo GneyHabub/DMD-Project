@@ -426,7 +426,10 @@ CREATE TABLE nurses_schedule(
 CREATE TABLE priests_schedule(
     date DATE,
     patient_id INT,
-    FOREIGN KEY (patient_id) REFERENCES patient(id)
+    priest_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
+    FOREIGN KEY (priest_id) REFERENCES priest(id)
+
 );
 
 CREATE TABLE patient_allergies(

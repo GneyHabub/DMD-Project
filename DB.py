@@ -6,12 +6,17 @@ import csv
 import numpy as np
 from datetime import date
 from datetime import timedelta
+from tqdm import tqdm
 
- 
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(x):
+        return x
 
 
-class DB:
-    def __init__(self,user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "postgres"):
+class Hospital:
+    def __init__(self,user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
         # Source: https://www.webmd.com/health-insurance/insurance-doctor-types#1
         self.speciality_list = ["Allergist", "Anesthesiologist", "Cardiologist", "Colon Surgeon"
                                ,"Critical Care Medicine Specialist", "Dermatologist", "Endocrinologists"
@@ -132,19 +137,16 @@ class DB:
                     self.cursor.copy_from(file, i[:-4], sep=',')
                     self.connection.commit()
             
-    def generate(self, num_person=500, table_name=None, write_schema_flag=True, write_json_flag=False):
-        if(table_name == "person_member"):
-            self._generate_person_member_db(num=num, write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-        else:
-            # generate everything
-            self._generate_facilities(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_person_member_db(num=num_person,write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_appointment_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_complaint_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_medicine_surgery_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_events_other_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_feedback_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
-            self._generate_schedule_db(write_json_flag=write_json_flag, write_schema_flag=write_schema_flag)
+    def generate(self):
+        self._generate_facilities()
+        self._generate_person_member_db()
+        self._generate_appointment_db()
+        self._generate_complaint_db()
+        self._generate_medicine_surgery_db()
+        self._generate_events_other_db()
+        self._generate_feedback_db()
+        self._generate_schedule_db()
+    
     def clean_schema_files(self):
         f = open('data/dep_lab.sql', 'w')
         f.close()
@@ -203,7 +205,7 @@ class DB:
                     for lab in labs:
                         self._generate_sql_schema(lab, append_file)
 
-    def _generate_person_member_db(self, num, write_schema_flag=True, write_json_flag=False):
+    def _generate_person_member_db(self, num=1000, write_schema_flag=True, write_json_flag=False):
         # using the property of aliasing and nested functions
         def _staff_member_customizer(staff_member, position, salary, room):
             staff_member["position"] = position
@@ -213,7 +215,8 @@ class DB:
         # person = []
         # contact_details = []
         # staff_member = []
-        for i in range(0, num):
+        print("Generate person_member.sql")
+        for i in tqdm(range(0, num)):
             # person.append({})
             # contact_details.append({})
             person = {"table_name":"person"}
@@ -423,17 +426,19 @@ class DB:
                     append_file.write("\nINSERT INTO contact_details VALUES ({:}, '{:}', '{:}', '{:}');".format(contact_details["id"],contact_details["phone"],contact_details["telegram"],contact_details["other"]))
 
     # appointment and doctors_reports
-    def _generate_appointment_db(self, num=30, write_schema_flag=True, write_json_flag=False):
-        for i in range(num):
+    def _generate_appointment_db(self, num=5000, write_schema_flag=True, write_json_flag=False):
+        print("Generate appointment.sql")
+        for i in tqdm(range(num)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
-            appointment = {"table_name": "appointment", "id":i+1, "time":time, "date": str(self.fake.date_between(start_date="-20d",end_date="+20d")), "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
+            appointment = {"table_name": "appointment", "id":i+1, "time":time, "date": str(self.fake.date_between(start_date="-12y",end_date="+20d")), "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             if(write_schema_flag):
                 with open('data/appointment.sql', 'a+') as append_file:
                     self._generate_sql_schema(appointment, append_file)
 
-        for i in range(num//10):
+        print("Continue generation appointment.sql")
+        for i in tqdm(range(num//10)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
-            date = self.fake.date_between(start_date="-20d",end_date="+20d")
+            date = self.fake.date_between(start_date="-12y",end_date="+20d")
             appointment = {"table_name": "emergency_appointment", "id":i+1, "time":time, "date": str(date), "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             if(write_schema_flag):
                 with open('data/appointment.sql', 'a+') as append_file:
@@ -443,8 +448,9 @@ class DB:
                         self._generate_sql_schema(doctors_report, append_file)
 
     
-    def _generate_complaint_db(self, num=30, write_schema_flag=True, write_json_flag=False):
-        for i in range(num):
+    def _generate_complaint_db(self, num=1000, write_schema_flag=True, write_json_flag=False):
+        print("Generate complaint.sql")
+        for i in tqdm(range(num)):
             selector = self.fake.random_int(1,3)
             complaint = {"table_name":"", "id": i, "submitted":str(self.fake.date_between(start_date="-5d",end_date="today")), "resolved":str(self.fake.date_between(start_date="-5d",end_date="today")), "subjectr": self.fake.text()}
             # patient_complaint
@@ -466,9 +472,10 @@ class DB:
                 with open('data/complaint.sql', 'a+') as append_file:
                     self._generate_sql_schema(complaint, append_file)
 
-    def _generate_medicine_surgery_db(self, num=40, write_schema_flag=True, write_json_flag=False):
+    def _generate_medicine_surgery_db(self, num=3000, write_schema_flag=True, write_json_flag=False):
         valid_medicine = self.fake.random_elements(elements=self.medicine_list, length=min(num+60,len(self.medicine_list)), unique=True)
-        for i in range(min(num+60,len(self.medicine_list))):
+        print("Generate medicine_surgery.sql")
+        for i in tqdm(range(min(num+60,len(self.medicine_list)))):
             medicine = {"table_name": "medicine", "name":valid_medicine[i], "amount": self.fake.random_int(0,100)}
             if(write_schema_flag):
                 with open('data/medicine_surgery.sql', 'a+') as append_file:
@@ -478,7 +485,8 @@ class DB:
                         self._generate_sql_schema(request_med, append_file)
                         patient_allergies = {"table_name": "patient_allergies", "patient_id":self.fake.random_element(elements=self.valid_patient_id), "preparate":medicine["name"]}
                         self._generate_sql_schema(patient_allergies, append_file)
-
+        
+        print("Continue Generate medicine_surgery.sql")
         for i in range(num):
             surgery = {"table_name": "surgery", "id": i+1, "date":str(self.fake.date_between(start_date="-5d",end_date="+30d")), "patient_id":self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             meds_surgery = {"table_name": "meds_for_surgery", "surgery_id": i+1, "med":self.fake.random_element(elements=valid_medicine)}
@@ -488,15 +496,26 @@ class DB:
                     self._generate_sql_schema(meds_surgery, append_file)
 
     # event, staff_meeting, invited, display_event, notification, email, invoice, CCTV_rec, food,
-    def _generate_events_other_db(self, num=30, write_schema_flag=True, write_json_flag=False):
-        valid_food = self.fake.random_elements(elements=self.food_list, length=num, unique=True)
+    def _generate_events_other_db(self, num=5000, write_schema_flag=True, write_json_flag=False):
+        valid_food = self.fake.random_elements(elements=self.food_list, length=min(num,len(self.food_list)), unique=True)
         initial_date = self.fake.date_between(start_date="-{:}d".format(num),end_date="+{:}d".format(num))
         valid_dates = [initial_date+timedelta(days=i) for i in range(num)]
-        for i in range(num):
+
+        print("Generate events_other.sql")
+        for i in tqdm(range(min(num,len(self.food_list)))):
+            food = {"table_name": "food", "name":valid_food[i][:30], "amount": self.fake.random_int(0,100), "supplier": self.fake.company()[:30], "can_be_allergic": bool(self.fake.random_int(0,1))}
+            if(write_schema_flag):
+                with open('data/events_other.sql', 'a+') as append_file:
+                    self._generate_sql_schema(food, append_file)
+                    if(self.fake.random_int(0,1) == 1):
+                        request_food = {"table_name": "request_food", "food":food["name"], "amount": self.fake.random_int(1,10)} 
+                        self._generate_sql_schema(request_food, append_file)
+        
+        print("Continue Generate events_other.sql")
+        for i in tqdm(range(num)):
             meeting_date = str(valid_dates[i])
             staff_meeting = {"table_name": "staff_meeting", "date": meeting_date, "topic": self.fake.text()[:30]}
             invited = {"table_name": "invited", "staff_member_id":self.fake.random_element(elements=self.valid_staff_id), "meeting":meeting_date}
-            food = {"table_name": "food", "name":valid_food[i][:30], "amount": self.fake.random_int(0,100), "supplier": self.fake.company()[:30], "can_be_allergic": bool(self.fake.random_int(0,1))}
             CCTV_rec = {"table_name": "CCTV_rec", "date":str(valid_dates[i]), "camera_num": self.fake.random_int(1,100)} 
             event = {"table_name": "event", "id": i+1, "title":self.fake.text()[:40]}
             display_event = {"table_name": "display_event", "person": self.fake.random_element(elements=self.valid_staff_id+self.valid_patient_id), "event": self.fake.random_int(1,i+1)}
@@ -507,10 +526,6 @@ class DB:
                 with open('data/events_other.sql', 'a+') as append_file:
                     self._generate_sql_schema(staff_meeting, append_file)
                     self._generate_sql_schema(invited, append_file)
-                    self._generate_sql_schema(food, append_file)
-                    if(self.fake.random_int(0,1) == 1):
-                        request_food = {"table_name": "request_food", "food":food["name"], "amount": self.fake.random_int(1,10)} 
-                        self._generate_sql_schema(request_food, append_file)
                     self._generate_sql_schema(CCTV_rec, append_file)
                     self._generate_sql_schema(event, append_file)
                     self._generate_sql_schema(display_event, append_file)
@@ -519,8 +534,10 @@ class DB:
                     self._generate_sql_schema(email, append_file)
 
     # request_med, request_food, feedback
-    def _generate_feedback_db(self, num=30, write_schema_flag=True, write_json_flag=False):
-        for i in range(num):
+    def _generate_feedback_db(self, num=5000, write_schema_flag=True, write_json_flag=False):
+        
+        print("Generate feedback.sql")
+        for i in tqdm(range(num)):
             feedback = {"table_name": "feedback", "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id), "text": self.fake.text()}
             
             if(write_schema_flag):
@@ -528,10 +545,12 @@ class DB:
                     self._generate_sql_schema(feedback, append_file)
 
     # doctors_schedule, nurses_schedule, priests_schedule
-    def _generate_schedule_db(self, num=30, write_schema_flag=True, write_json_flag=False):
-        for i in range(num):
+    def _generate_schedule_db(self, num=1000, write_schema_flag=True, write_json_flag=False):
+        
+        print("Generate schedule.sql")
+        for i in tqdm(range(num)):
             selector = self.fake.random_int(1,3)
-            schedule = {"table_name":"", "date":self.fake.date_between(start_date="-5d",end_date="+5d")}
+            schedule = {"table_name":"", "date":str(self.fake.date_between(start_date="-5d",end_date="+5d"))}
             # doctors_schedule
             if(selector == 1):
                 schedule["table_name"] = "doctors_schedule"
@@ -559,7 +578,7 @@ class DB:
 
         
 if __name__ == "__main__":
-    db = DB()
+    db = Hospital(database="DMD")
     db.clean_schema_files()
     db.generate()
     db.pg_query("data/dep_lab.sql")
@@ -570,3 +589,5 @@ if __name__ == "__main__":
     db.pg_query("data/medicine_surgery.sql")
     db.pg_query("data/events_other.sql")
     db.pg_query("data/feedback.sql")
+    db.pg_query("data/schedule.sql")
+
