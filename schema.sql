@@ -1,3 +1,4 @@
+
 -- If u find any misspelling, just fix it
 -- If u find any incosistency or bag, just fix it)
 -- In oreder to run this file, you need to drop every table and then create again,
@@ -403,7 +404,7 @@ CREATE TABLE feedback(
     patient_id INT,
     doctor_id INT,
     text TEXT,
-    FOREIGN KEY (patient_id) REFERENCES patient(id), 
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
     FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 );
 
@@ -420,14 +421,12 @@ CREATE TABLE nurses_schedule(
     date DATE,
     shift VARCHAR(6), -- 'Day" or 'Night'
     FOREIGN KEY (nurse_id) REFERENCES nurse(id)
-);  
+);
 
 CREATE TABLE priests_schedule(
     date DATE,
     patient_id INT,
-    priest_id INT,
-    FOREIGN KEY (patient_id) REFERENCES patient(id),
-    FOREIGN KEY (priest_id) REFERENCES priest(id)
+    FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
 CREATE TABLE patient_allergies(
