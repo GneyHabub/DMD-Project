@@ -166,6 +166,8 @@ class Hospital:
         f.close()
         f = open('data/schedule.sql', 'w')
         f.close()
+        f = open('data/appointment_q3_sick.sql', 'w')
+        f.close()
 
 
 
@@ -205,7 +207,7 @@ class Hospital:
                     for lab in labs:
                         self._generate_sql_schema(lab, append_file)
 
-    def _generate_person_member_db(self, num=1000, write_schema_flag=True, write_json_flag=False):
+    def _generate_person_member_db(self, num=500, write_schema_flag=True, write_json_flag=False):
         # using the property of aliasing and nested functions
         def _staff_member_customizer(staff_member, position, salary, room):
             staff_member["position"] = position
@@ -426,7 +428,7 @@ class Hospital:
                     append_file.write("\nINSERT INTO contact_details VALUES ({:}, '{:}', '{:}', '{:}');".format(contact_details["id"],contact_details["phone"],contact_details["telegram"],contact_details["other"]))
 
     # appointment and doctors_reports
-    def _generate_appointment_db(self, num=5000, write_schema_flag=True, write_json_flag=False):
+    def _generate_appointment_db(self, num=10000, write_schema_flag=True, write_json_flag=False):
         print("Generate appointment.sql")
         for i in tqdm(range(num)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
@@ -434,7 +436,7 @@ class Hospital:
             if(write_schema_flag):
                 with open('data/appointment.sql', 'a+') as append_file:
                     self._generate_sql_schema(appointment, append_file)
-
+        # self._generate_sick_patient_db(num)
         print("Continue generation appointment.sql")
         for i in tqdm(range(num//10)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
@@ -447,7 +449,21 @@ class Hospital:
                         doctors_report = {"table_name": "doctors_report", "appointment_id": i+1, "text":self.fake.text()}
                         self._generate_sql_schema(doctors_report, append_file)
 
-    
+    def _generate_sick_patient_db(self,start_id, num=10, write_schema_flag=True, write_json_flag=False):
+        for i in tqdm(range(num//3)):
+            time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
+            for x in range(4):
+                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x+1)*self.fake.random_int(1,7))
+                appointment1 = {"table_name": "appointment", "id":(x+1)*(start_id+i+1), "time":time, "date": date, "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
+                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x+1)*self.fake.random_int(1,7))
+                appointment2 = {"table_name": "appointment", "id":(x+1)*(start_id+i+2), "time":time, "date": date, "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
+            if(write_schema_flag):
+                with open('data/appointment_q3_sick.sql', 'a+') as append_file:
+                    self._generate_sql_schema(appointment1, append_file)
+                    self._generate_sql_schema(appointment2, append_file)
+
+
+
     def _generate_complaint_db(self, num=1000, write_schema_flag=True, write_json_flag=False):
         print("Generate complaint.sql")
         for i in tqdm(range(num)):
@@ -590,4 +606,5 @@ if __name__ == "__main__":
     db.pg_query("data/events_other.sql")
     db.pg_query("data/feedback.sql")
     db.pg_query("data/schedule.sql")
+    db.pg_query("data/appointment_q3_sick.sql")
 

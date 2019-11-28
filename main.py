@@ -11,6 +11,8 @@ db.pg_query("data/medicine_surgery.sql")
 db.pg_query("data/events_other.sql")
 db.pg_query("data/feedback.sql")
 db.pg_query("data/schedule.sql")  
+db.pg_query("data/appointment_q3_sick.sql")
+
 
 print("Commands:\n\
       0 --> Exit\n\
@@ -19,17 +21,18 @@ print("Commands:\n\
 
 while(True):
     querry = input("Type the number of query you wish to execute or 0 in order to exit:")
-    if querry=='1':
-        Querries.Q1.execute()
-    elif querry=='2':
+    if querry =='1':
+        patient_id = int(input("Input the patient's ID: "))
+        Querries.Q1.execute(patient_id)
+    elif querry =='2':
         Querries.Q2.execute()
-    elif querry=='3':
+    elif querry =='3':
         Querries.Q3.execute()
-    elif querry=='4':
+    elif querry =='4':
         Querries.Q4.execute()
-    elif querry=='5':
+    elif querry =='5':
         Querries.Q5.execute()
-    elif querry=='0':
+    elif querry =='0':
         break
 
     elif querry == 'c':
@@ -46,6 +49,8 @@ while(True):
         db.pg_query("data/events_other.sql")
         db.pg_query("data/feedback.sql")
         db.pg_query("data/schedule.sql")
+        db.pg_query("data/appointment_q3_sick.sql")
+
 
     else:
         print("You input was not recognized, please try again")

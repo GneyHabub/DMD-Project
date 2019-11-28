@@ -2,25 +2,35 @@ import psycopg2
 
 class Q1:
     @staticmethod
-    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
-        con = psycopg2.connect(database=database, user=user, password=password, host=host,
-                               port=port)
+    def execute(id):
+        ids = []
+        ids.append(int(id))
+        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+                               port="5432")
         cur = con.cursor()
-        cur.execute("SELECT * FROM person, doctor WHERE doctor.id = person.id AND \
+        cur.execute("SELECT * FROM person, doctor, appointment WHERE doctor.id = person.id AND \
+                    appointment.patient_id = {:} AND\
                     (((first_name LIKE 'M%' OR first_name LIKE 'L%')\
                      OR (second_name LIKE 'M%' OR second_name LIKE 'L%')) AND \
                      (NOT ((first_name LIKE 'M%' AND second_name LIKE 'M%') \
-                     OR(first_name LIKE 'L%' AND second_name LIKE 'M%'))))");
+                     OR(first_name LIKE 'L%' AND second_name LIKE 'M%')))) \
+                     ORDER BY appointment.date DESC".format(ids[0]))
 
         rows = cur.fetchall()
-        for row in rows:
-            print(row[1], row[2])
+        if(len(rows) == 0):
+            print("No data to be shown")
+        else:
+            date_needed = rows[0][18]
+            for row in rows:
+                if(row[18] == date_needed):
+                    print(row[1], row[2])
+
 
 class Q2:
     @staticmethod
-    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
-        con = psycopg2.connect(database=database, user=user, password=password, host=host,
-                               port=port)
+    def execute():
+        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+                               port="5432")
         cur = con.cursor()
         cur.execute("SELECT doctor.id, app.time, count(*), (CAST(count(*) as FLOAT)/52), dow as app_avg \
                     FROM doctor, (SELECT *, to_char(date, 'day') as dow FROM appointment) AS app WHERE doctor.id=app.doctor_id AND \
@@ -42,9 +52,9 @@ class Q2:
 
 class Q3:
     @staticmethod
-    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
-        con = psycopg2.connect(database=database, user=user, password=password, host=host,
-                               port=port)
+    def execute():
+        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+                               port="5432")
         cur = con.cursor()
         cur.execute("SELECT new_id \
                      FROM(SELECT new_id, count(new_id) as weeks \
@@ -67,9 +77,9 @@ class Q3:
 
 class Q4:
     @staticmethod
-    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
-        con = psycopg2.connect(database=database, user=user, password=password, host=host,
-                               port=port)
+    def execute():
+        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+                               port="5432")
         cur = con.cursor()
         cur.execute("SELECT sum(person_charge_2.charge) \
                     FROM\
@@ -99,9 +109,9 @@ class Q4:
 
 class Q5:
     @staticmethod
-    def execute(user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "DMD"):
-        con = psycopg2.connect(database=database, user=user, password=password, host=host,
-                               port=port)
+    def execute():
+        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+                               port="5432")
         cur = con.cursor()
         cur.execute("SELECT new_table_2.id \
                     FROM\
