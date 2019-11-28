@@ -1,7 +1,7 @@
 # MySQL part
 
 
-** How to use the Database?
+**How to use the Database?
 
 1- Install MySQL from that [link](https://www.sitepoint.com/how-to-install-mysql/) and setup the environment or it depends on your machine, it is easier on linux OS.
 
