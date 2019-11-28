@@ -5,7 +5,7 @@ class Q1:
     def execute(id):
         ids = []
         ids.append(int(id))
-        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+        con = psycopg2.connect(database="Hospital", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
         cur.execute("SELECT * FROM person, doctor, appointment WHERE doctor.id = person.id AND \
@@ -30,7 +30,7 @@ class Q1:
 class Q2:
     @staticmethod
     def execute():
-        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+        con = psycopg2.connect(database="Hospital", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
         cur.execute("SELECT doctor.id, app.time, count(*), (CAST(count(*) as FLOAT)/52), dow as app_avg \
@@ -54,7 +54,7 @@ class Q2:
 class Q3:
     @staticmethod
     def execute():
-        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+        con = psycopg2.connect(database="Hospital", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
         cur.execute("SELECT new_id, weeks \
@@ -75,7 +75,7 @@ class Q3:
 class Q4:
     @staticmethod
     def execute():
-        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+        con = psycopg2.connect(database="Hospital", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
         cur.execute("SELECT sum(person_charge_2.charge) \
@@ -107,7 +107,7 @@ class Q4:
 class Q5:
     @staticmethod
     def execute():
-        con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
+        con = psycopg2.connect(database="Hospital", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
         cur.execute("SELECT new_table_2.id \

@@ -1,7 +1,7 @@
 from DB import Hospital
 import Querries
 
-db = Hospital(database="DMD")
+db = Hospital(database="Hospital")
 db.pg_query("data/dep_lab.sql")
 db.pg_query("data/person_member.sql")
 db.pg_query("data/contact_details.sql")

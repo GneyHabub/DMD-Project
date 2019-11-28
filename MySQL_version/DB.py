@@ -1,5 +1,4 @@
-import psycopg2
-from psycopg2 import Error
+import pymysql
 from faker import Faker
 import json
 import csv
@@ -15,7 +14,7 @@ except ImportError:
 
 
 class Hospital:
-    def __init__(self,user = "postgres", password = "123456789", host = "127.0.0.1", port = "5432", database = "Hospital"):
+    def __init__(self,user = "user", password = "123456789", host = "127.0.0.1", database = "Hospital"):
         # Source: https://www.webmd.com/health-insurance/insurance-doctor-types#1
         self.speciality_list = ["Allergist", "Anesthesiologist", "Cardiologist", "Colon Surgeon"
                                ,"Critical Care Medicine Specialist", "Dermatologist", "Endocrinologists"
@@ -68,7 +67,7 @@ class Hospital:
                         , "chowder", "clams", "coffee", "cookies", "corn", "cupcakes", "crab", "curry", "cereal", "chimichanga", "dates", "dips", "duck", "dumplings", "donuts", "eggs", "enchilada", "eggrolls", "English muffins", "edimame", "sushi", "fajita"
                         , "falafel", "fish", "franks", "fondu", "French dip", "Garlic", "ginger", "gnocchi", "goose", "granola", "grapes", "green beans", "Guancamole", "gumbo", "grits", "Graham crackers", "ham", "halibut", "hamburger", "honey", "huenos rancheros"
                         , "hash browns", "hot dogs", "haiku roll", "hummus", "ice cream", "Irish stew", "Indian food", "Italian bread", "jambalaya", "jelly", "jerky", "jalapeño", "kale", "kabobs", "ketchup", "kiwi", "kidney beans", "kingfish", "lobster", "Lamb", "Linguine", "Lasagna"
-                        , "Meatballs", "Moose", "Milk", "Milkshake", "Noodles", "Ostrich", "Pizza", "Pepperoni", "Porter", "Pancakes", "Quesadilla", "Quiche", "Reuben", "Spinach", "Spaghetti", "Tater tots", "Toast", "Venison", "Waffles", "Wine", "Walnuts", "Yogurt", "Ziti", "Zucchini"]
+                        , "Meatballs", "Moose", "Milk", "Milkshake", "Ostrich", "Pizza", "Pepperoni", "Porter", "Pancakes", "Quesadilla", "Quiche", "Reuben", "Spinach", "Spaghetti", "Tater tots", "Toast", "Venison", "Waffles", "Wine", "Walnuts", "Yogurt", "Ziti", "Zucchini"]
         
         self.valid_patient_id = []
         self.valid_doctor_id = []
@@ -79,42 +78,80 @@ class Hospital:
         self.valid_priest_id = []
 
         self.fake = Faker()
-        self.connection = psycopg2.connect( user = user,
+
+        self.connection = pymysql.connect( user = user,
                                             password = password,
                                             host = host,
-                                            port = port,
                                             database = database)
         self.num_departements = self.fake.random_int(10,20)
 
-        print("PostgreSQL connection is Opened")
+        print("MySQL connection is Opened")
         self.cursor = self.connection.cursor()
         print("Creating the DB")
+        
+        self.pg_query("DROP DATABASE IF EXISTS Hospital;")
+        self.pg_query("CREATE DATABASE Hospital;")
+
+        self.connection = pymysql.connect( user = user,
+                                            password = password,
+                                            host = host,
+                                            database = database)
+        self.cursor = self.connection.cursor()
+
         self.pg_query("schema.sql")
+        
         print("Finish creating the DB")
-        # self.load_db()
-        # self.pg_query('INSERT INTO person VALUES (996,"Ryan Garcia","odavis@gmail.com","mitchelljulie","CWsbkbjPfTRm","M",1932-12-31,87,2)')
     
-    def pg_query(self, query):
-        try:
-            if(".sql" in str(query)):
-                self.cursor.execute(open(query, "r").read())
-                print("{:} has been executed".format(query))
+    # Source: http://adamlamers.com/post/GRBJUKCDMPOA
+    def parse_sql(self, filename):
+        data = open(filename, 'r').readlines()
+        stmts = []
+        DELIMITER = ';'
+        stmt = ''
 
+        for lineno, line in enumerate(data):
+            if not line.strip():
+                continue
+
+            if line.startswith('--'):
+                continue
+
+            if 'DELIMITER' in line:
+                DELIMITER = line.split()[1]
+                continue
+
+            if (DELIMITER not in line):
+                stmt += line.replace(DELIMITER, ';')
+                continue
+
+            if stmt:
+                stmt += line
+                stmts.append(stmt.strip())
+                stmt = ''
             else:
-                self.cursor.execute(query)
-                print("Query that start with \n\"{:}\"\n has been executed and added to the database".format(query[:min(len(query),10)]))
+                stmts.append(line.strip())
+        return stmts
+
+    def pg_query(self, query):
+        if(".sql" in str(query)):
+            stmts = self.parse_sql(query)
+            for stmt in stmts:
+                self.cursor.execute(stmt)
+            print("{:} has been executed".format(query))
+
+        else:
+            self.cursor.execute(query)
+            print("Query that start with \n\"{:}\"\n has been executed and added to the database".format(query[:min(len(query),10)]))
 
 
-            self.connection.commit()
-        except (Exception, psycopg2.DatabaseError) as error :
-            print (error)
+        self.connection.commit()
 
 
     def __del__(self):
         if(self.connection):
             self.cursor.close()
             self.connection.close
-        print("PostgreSQL connection is closed")
+        print("MySql connection is closed")
 
 
     def load_db(self, db_name=None):
@@ -147,25 +184,25 @@ class Hospital:
         self._generate_schedule_db()
     
     def clean_schema_files(self):
-        f = open('data/dep_lab.sql', 'w')
+        f = open('data/dep_lab.sql', '+w')
         f.close()
-        f = open('data/person_member.sql', 'w')
+        f = open('data/person_member.sql', '+w')
         f.close()
-        f = open('data/contact_details.sql', 'w')
+        f = open('data/contact_details.sql', '+w')
         f.close()
-        f = open('data/appointment.sql', 'w')
+        f = open('data/appointment.sql', '+w')
         f.close()
-        f = open('data/complaint.sql', 'w')
+        f = open('data/complaint.sql', '+w')
         f.close()
-        f = open('data/medicine_surgery.sql', 'w')
+        f = open('data/medicine_surgery.sql', '+w')
         f.close()
-        f = open('data/events_other.sql', 'w')
+        f = open('data/events_other.sql', '+w')
         f.close()
-        f = open('data/feedback.sql', 'w')
+        f = open('data/feedback.sql', '+w')
         f.close()
-        f = open('data/schedule.sql', 'w')
+        f = open('data/schedule.sql', '+w')
         f.close()
-        f = open('data/appointment_q3_sick.sql', 'w')
+        f = open('data/appointment_q3_sick.sql', '+w')
         f.close()
 
 
