@@ -436,7 +436,7 @@ class Hospital:
             if(write_schema_flag):
                 with open('data/appointment.sql', 'a+') as append_file:
                     self._generate_sql_schema(appointment, append_file)
-        # self._generate_sick_patient_db(num)
+        self._generate_sick_patient_db(num)
         print("Continue generation appointment.sql")
         for i in tqdm(range(num//10)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
@@ -450,17 +450,21 @@ class Hospital:
                         self._generate_sql_schema(doctors_report, append_file)
 
     def _generate_sick_patient_db(self,start_id, num=10, write_schema_flag=True, write_json_flag=False):
+        counter = start_id+1
         for i in tqdm(range(num//3)):
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
+            patient_id = self.fake.random_element(elements=self.valid_patient_id)
             for x in range(4):
-                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x+1)*self.fake.random_int(1,7))
-                appointment1 = {"table_name": "appointment", "id":(x+1)*(start_id+i+1), "time":time, "date": date, "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
-                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x+1)*self.fake.random_int(1,7))
-                appointment2 = {"table_name": "appointment", "id":(x+1)*(start_id+i+2), "time":time, "date": date, "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
-            if(write_schema_flag):
-                with open('data/appointment_q3_sick.sql', 'a+') as append_file:
-                    self._generate_sql_schema(appointment1, append_file)
-                    self._generate_sql_schema(appointment2, append_file)
+                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x)*7+self.fake.random_int(1,6))
+                appointment1 = {"table_name": "appointment", "id":counter, "time":time, "date": date, "patient_id": patient_id, "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
+                date = "{:04d}-{:02d}-{:02d}".format(2019,11,(x)*7+self.fake.random_int(1,6))
+                counter += 1
+                appointment2 = {"table_name": "appointment", "id":counter, "time":time, "date": date, "patient_id": patient_id, "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
+                counter += 1
+                if(write_schema_flag):
+                    with open('data/appointment_q3_sick.sql', 'a+') as append_file:
+                        self._generate_sql_schema(appointment1, append_file)
+                        self._generate_sql_schema(appointment2, append_file)
 
 
 

@@ -16,6 +16,7 @@ class Q1:
                      OR(first_name LIKE 'L%' AND second_name LIKE 'M%')))) \
                      ORDER BY appointment.date DESC".format(ids[0]))
 
+
         rows = cur.fetchall()
         if(len(rows) == 0):
             print("No data to be shown")
@@ -56,24 +57,20 @@ class Q3:
         con = psycopg2.connect(database="DMD", user="postgres", password="123456789", host="127.0.0.1",
                                port="5432")
         cur = con.cursor()
-        cur.execute("SELECT new_id \
-                     FROM(SELECT new_id, count(new_id) as weeks \
-                          FROM (SELECT patient.id as new_id, app.date as new_date, week, count(*) as count_app \
-                                FROM patient, (SELECT *, extract('week' from date) as week FROM appointment) AS app\
-                                WHERE patient.id = app.patient_id AND \
-                                app.date > current_date - interval '1 month'\
-                                GROUP BY patient.id, app.date, week\
-                                ORDER BY patient.id, week, app.date) AS new_table\
-                          WHERE new_table.count_app > 1 \
-                          GROUP BY new_table.new_id) AS new_table_2\
-                    WHERE new_table_2.weeks = 4");
-
+        cur.execute("SELECT new_id, weeks \
+                    FROM(SELECT new_id, count(new_id) as weeks \
+                    FROM( \
+                    SELECT patient.id as new_id, week, count(*) as count_app \
+                        FROM patient, (SELECT *, extract('week' from date) as week FROM appointment) AS app\
+                        WHERE patient.id = app.patient_id AND \
+                        app.date > current_date - interval '1 month'\
+                        GROUP BY patient.id, week\
+                        ORDER BY patient.id, week) AS new_table GROUP BY new_id) as new_table_2 WHERE weeks=4 ORDER BY new_id");
+        #cur.execute("SELECT appointment.id FROM appointment WHERE appointment.patient_id = 261")
         rows = cur.fetchall()
         printed = []
         for row in rows:
-            if row[0] not in printed:
-                print("ID = ", row[0])
-                printed.append(row[0])
+            print("ID = ", row[0])
 
 class Q4:
     @staticmethod
