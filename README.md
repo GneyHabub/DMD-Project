@@ -2,7 +2,7 @@
 Software project in DMD course at Innopolis University by Hany Hamed, Alexandr Grischenko and Alexandr Krivonosov (2019)
 
 
-** How to use the Database?
+**How to use the Database?
 
 1- Install postgres from that [link](https://www.2ndquadrant.com/en/blog/pginstaller-install-postgresql/) and setup the environment or it depends on your machine, it is easier on linux OS.
 
