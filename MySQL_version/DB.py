@@ -14,7 +14,7 @@ except ImportError:
 
 
 class Hospital:
-    def __init__(self,user = "user", password = "123456789", host = "127.0.0.1", database = "Hospital"):
+    def __init__(self, user = "user", password = "123456789", host = "127.0.0.1", database = "Hospital"):
         # Source: https://www.webmd.com/health-insurance/insurance-doctor-types#1
         self.speciality_list = ["Allergist", "Anesthesiologist", "Cardiologist", "Colon Surgeon"
                                ,"Critical Care Medicine Specialist", "Dermatologist", "Endocrinologists"
@@ -78,6 +78,7 @@ class Hospital:
         self.valid_priest_id = []
 
         self.fake = Faker()
+  
 
         self.connection = pymysql.connect( user = user,
                                             password = password,
@@ -89,6 +90,13 @@ class Hospital:
         self.cursor = self.connection.cursor()
         print("Creating the DB")
         
+        self.clean_reconnect(user,password,host,database)
+
+        self.pg_query("schema.sql")
+        
+        print("Finish creating the DB")
+    
+    def clean_reconnect(self, user = "user", password = "123456789", host = "127.0.0.1", database = "Hospital"):
         self.pg_query("DROP DATABASE IF EXISTS Hospital;")
         self.pg_query("CREATE DATABASE Hospital;")
 
@@ -98,10 +106,6 @@ class Hospital:
                                             database = database)
         self.cursor = self.connection.cursor()
 
-        self.pg_query("schema.sql")
-        
-        print("Finish creating the DB")
-    
     # Source: http://adamlamers.com/post/GRBJUKCDMPOA
     def parse_sql(self, filename):
         data = open(filename, 'r').readlines()
@@ -238,7 +242,7 @@ class Hospital:
                 lab_list.append(valid_departement_list[i]+" lab"+str(x+1))
             
             if(write_schema_flag):
-                with open('data/dep_lab.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(departement,append_file)
                     for lab in labs:
                         self._generate_sql_schema(lab, append_file)
@@ -283,16 +287,15 @@ class Hospital:
             contact_details["telegram"] = "@"+profile["username"][:30]
             contact_details["other"] = "".join(self.fake.random_letters(length=30) if i%5 else "")
             
-            # IT_complaint
 
 
-            #reseptionist, maintanence_worker, cleaning_team_worker, security_team_member, hr, pharmasist,
-            # cook, priest, nurse, IT_specialist, prof, doctor, patient, lab_technician
             person_type_selector = np.random.choice(14,1,p=[0.2,0.15,0.2,0.1,0.05,0.05,0.05,0.05,0.02,0.03,0.03,0.03,0.02,0.02])
+
+            # Patient
             if(person_type_selector == 2):
                 patient["id"] = person["id"]
-                staff_member["registration_date"] = str(self.fake.date_between(start_date="-40d", end_date="today")) 
-                staff_member["occupation"] = profile["job"][:50]
+                patient["registration_date"] = str(self.fake.date_between(start_date="-40d", end_date="today")) 
+                patient["occupation"] = profile["job"][:50]
                 patient_address["street"] = self.fake.name().split(" ")[0][:26]+" st."
                 patient_address["house"] = str(self.fake.random_int(1,100))
                 patient_address["apartement"] = str(self.fake.random_int(1,10))
@@ -439,7 +442,7 @@ class Hospital:
                     generated_member["degree"] = self.fake.random_element(elements=["Bachelor", "Magister", "PhD"])
 
             if(write_schema_flag):
-                with open('data/person_member.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     # person
                     #append_file.write("\nINSERT INTO person VALUES ({:}, '{:}', '{:}', '{:}', '{:}', '{:}','{:}','{:}',{:},{:});".format(person["id"],person["first_name"], person["second_name"],person["email"],person["user_login"],person["user_password"],person["sex"],person["date_of_birth"],person["age"],person["permission_level"]))
                     self._generate_sql_schema(person,append_file)
@@ -460,7 +463,7 @@ class Hospital:
                             self._generate_sql_schema(languages_spoken, append_file)
             
             if(write_schema_flag):
-                with open('data/contact_details.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     append_file.write("\nINSERT INTO contact_details VALUES ({:}, '{:}', '{:}', '{:}');".format(contact_details["id"],contact_details["phone"],contact_details["telegram"],contact_details["other"]))
 
     # appointment and doctors_reports
@@ -470,7 +473,7 @@ class Hospital:
             time = "{:02d}:{:02d}:{:02d}".format(self.fake.random_int(9,18),15*self.fake.random_int(0,3),0)
             appointment = {"table_name": "appointment", "id":i+1, "time":time, "date": str(self.fake.date_between(start_date="-12y",end_date="+20d")), "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             if(write_schema_flag):
-                with open('data/appointment.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(appointment, append_file)
         self._generate_sick_patient_db(num)
         print("Continue generation appointment.sql")
@@ -479,7 +482,7 @@ class Hospital:
             date = self.fake.date_between(start_date="-12y",end_date="+20d")
             appointment = {"table_name": "emergency_appointment", "id":i+1, "time":time, "date": str(date), "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             if(write_schema_flag):
-                with open('data/appointment.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(appointment, append_file)
                     if(date < date.today()):
                         doctors_report = {"table_name": "doctors_report", "appointment_id": i+1, "text":self.fake.text()}
@@ -498,7 +501,7 @@ class Hospital:
                 appointment2 = {"table_name": "appointment", "id":counter, "time":time, "date": date, "patient_id": patient_id, "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
                 counter += 1
                 if(write_schema_flag):
-                    with open('data/appointment_q3_sick.sql', 'a+') as append_file:
+                    with open('schema.sql', 'a+') as append_file:
                         self._generate_sql_schema(appointment1, append_file)
                         self._generate_sql_schema(appointment2, append_file)
 
@@ -525,7 +528,7 @@ class Hospital:
                 complaint["responsible"] = self.fake.random_element(elements=self.valid_maintanence_id)
             
             if(write_schema_flag):
-                with open('data/complaint.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(complaint, append_file)
 
     def _generate_medicine_surgery_db(self, num=3000, write_schema_flag=True, write_json_flag=False):
@@ -534,7 +537,7 @@ class Hospital:
         for i in tqdm(range(min(num+60,len(self.medicine_list)))):
             medicine = {"table_name": "medicine", "name":valid_medicine[i], "amount": self.fake.random_int(0,100)}
             if(write_schema_flag):
-                with open('data/medicine_surgery.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(medicine, append_file)
                     if(self.fake.random_int(0,1) == 1):
                         request_med = {"table_name": "request_med", "date": str(self.fake.date_between(start_date="-5d",end_date="+30d")), "med":medicine["name"], "amount": self.fake.random_int(1,10), "requester":self.fake.random_element(elements=self.valid_staff_id)} 
@@ -547,7 +550,7 @@ class Hospital:
             surgery = {"table_name": "surgery", "id": i+1, "date":str(self.fake.date_between(start_date="-5d",end_date="+30d")), "patient_id":self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id)}
             meds_surgery = {"table_name": "meds_for_surgery", "surgery_id": i+1, "med":self.fake.random_element(elements=valid_medicine)}
             if(write_schema_flag):
-                with open('data/medicine_surgery.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(surgery, append_file)
                     self._generate_sql_schema(meds_surgery, append_file)
 
@@ -561,7 +564,7 @@ class Hospital:
         for i in tqdm(range(min(num,len(self.food_list)))):
             food = {"table_name": "food", "name":valid_food[i][:30], "amount": self.fake.random_int(0,100), "supplier": self.fake.company()[:30], "can_be_allergic": bool(self.fake.random_int(0,1))}
             if(write_schema_flag):
-                with open('data/events_other.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(food, append_file)
                     if(self.fake.random_int(0,1) == 1):
                         request_food = {"table_name": "request_food", "food":food["name"], "amount": self.fake.random_int(1,10)} 
@@ -579,7 +582,7 @@ class Hospital:
             invoice = {"table_name": "invoice", "id": i+1, "date":str(self.fake.date_between(start_date="-5d",end_date="+30d")), "amount": self.fake.random_int(100,100000), "subject":self.fake.text(), "debtor": self.fake.random_element(elements=self.valid_staff_id+self.valid_patient_id)}
             email = {"table_name":"email","date":str(self.fake.date_between(start_date="-5d",end_date="+30d")), "sent": self.fake.random_element(elements=self.valid_staff_id+self.valid_patient_id), "recived":self.fake.random_element(elements=self.valid_staff_id+self.valid_patient_id)}
             if(write_schema_flag):
-                with open('data/events_other.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(staff_meeting, append_file)
                     self._generate_sql_schema(invited, append_file)
                     self._generate_sql_schema(CCTV_rec, append_file)
@@ -597,7 +600,7 @@ class Hospital:
             feedback = {"table_name": "feedback", "patient_id": self.fake.random_element(elements=self.valid_patient_id), "doctor_id": self.fake.random_element(elements=self.valid_doctor_id), "text": self.fake.text()}
             
             if(write_schema_flag):
-                with open('data/feedback.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(feedback, append_file)
 
     # doctors_schedule, nurses_schedule, priests_schedule
@@ -624,7 +627,7 @@ class Hospital:
                 schedule["patient_id"] = self.fake.random_element(elements=self.valid_patient_id)
                 schedule["priest_id"] = self.fake.random_element(elements=self.valid_priest_id)
             if(write_schema_flag):
-                with open('data/schedule.sql', 'a+') as append_file:
+                with open('schema.sql', 'a+') as append_file:
                     self._generate_sql_schema(schedule, append_file)
 
         # doctors_schedule
@@ -635,16 +638,18 @@ class Hospital:
         
 if __name__ == "__main__":
     db = Hospital(database="Hospital")
-    db.clean_schema_files()
+    # db.clean_schema_files()
     db.generate()
-    db.pg_query("data/dep_lab.sql")
-    db.pg_query("data/person_member.sql")
-    db.pg_query("data/contact_details.sql")
-    db.pg_query("data/appointment.sql")
-    db.pg_query("data/complaint.sql")
-    db.pg_query("data/medicine_surgery.sql")
-    db.pg_query("data/events_other.sql")
-    db.pg_query("data/feedback.sql")
-    db.pg_query("data/schedule.sql")
-    db.pg_query("data/appointment_q3_sick.sql")
+    db.clean_reconnect()
+    db.pg_query("schema.sql")
+    # db.pg_query("data/dep_lab.sql")
+    # db.pg_query("data/person_member.sql")
+    # db.pg_query("data/contact_details.sql")
+    # db.pg_query("data/appointment.sql")
+    # db.pg_query("data/complaint.sql")
+    # db.pg_query("data/medicine_surgery.sql")
+    # db.pg_query("data/events_other.sql")
+    # db.pg_query("data/feedback.sql")
+    # db.pg_query("data/schedule.sql")
+    # db.pg_query("data/appointment_q3_sick.sql")
 

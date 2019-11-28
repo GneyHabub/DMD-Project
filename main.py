@@ -2,16 +2,18 @@ from DB import Hospital
 import Querries
 
 db = Hospital(database="Hospital")
-db.pg_query("data/dep_lab.sql")
-db.pg_query("data/person_member.sql")
-db.pg_query("data/contact_details.sql")
-db.pg_query("data/appointment.sql")
-db.pg_query("data/complaint.sql")
-db.pg_query("data/medicine_surgery.sql")
-db.pg_query("data/events_other.sql")
-db.pg_query("data/feedback.sql")
-db.pg_query("data/schedule.sql")  
-db.pg_query("data/appointment_q3_sick.sql")
+db.pg_query("schema.sql")
+
+# db.pg_query("data/dep_lab.sql")
+# db.pg_query("data/person_member.sql")
+# db.pg_query("data/contact_details.sql")
+# db.pg_query("data/appointment.sql")
+# db.pg_query("data/complaint.sql")
+# db.pg_query("data/medicine_surgery.sql")
+# db.pg_query("data/events_other.sql")
+# db.pg_query("data/feedback.sql")
+# db.pg_query("data/schedule.sql")  
+# db.pg_query("data/appointment_q3_sick.sql")
 
 
 print("Commands:\n\
@@ -35,21 +37,24 @@ while(True):
     elif querry =='0':
         break
 
-    elif querry == 'c':
-        print("Clear and generate new dataset")
-        db.pg_query("schema.sql")
-        db.clean_schema_files()
-        db.generate()
-        db.pg_query("data/dep_lab.sql")
-        db.pg_query("data/person_member.sql")
-        db.pg_query("data/contact_details.sql")
-        db.pg_query("data/appointment.sql")
-        db.pg_query("data/complaint.sql")
-        db.pg_query("data/medicine_surgery.sql")
-        db.pg_query("data/events_other.sql")
-        db.pg_query("data/feedback.sql")
-        db.pg_query("data/schedule.sql")
-        db.pg_query("data/appointment_q3_sick.sql")
+
+    # #This will not work unless it is seperate files for the insertion because the unique id
+    # elif querry == 'c':
+    #     print("Clear and generate new dataset")
+    #     db.pg_query("schema.sql")
+    #     db.clean_schema_files()
+    #     db.generate()
+    #     db.pg_query("schema.sql")
+    #     db.pg_query("data/dep_lab.sql")
+    #     db.pg_query("data/person_member.sql")
+    #     db.pg_query("data/contact_details.sql")
+    #     db.pg_query("data/appointment.sql")
+    #     db.pg_query("data/complaint.sql")
+    #     db.pg_query("data/medicine_surgery.sql")
+    #     db.pg_query("data/events_other.sql")
+    #     db.pg_query("data/feedback.sql")
+    #     db.pg_query("data/schedule.sql")
+    #     db.pg_query("data/appointment_q3_sick.sql")
 
 
     else:

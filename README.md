@@ -29,3 +29,4 @@ Software project in DMD course at Innopolis University by Hany Hamed, Alexandr G
 
 7- Run ```main.py``` using ```python3 main.py``` to run the main program that is responsible for the queries.
 
+8- To restore the schemas original files run ```./restore_schemas.sh```
