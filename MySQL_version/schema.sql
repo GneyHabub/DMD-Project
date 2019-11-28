@@ -201,7 +201,7 @@ CREATE TABLE doc_education(
 CREATE TABLE patient(
     id INT UNIQUE,
     FOREIGN KEY(id) REFERENCES person(id),
-    registration_date DATETIME NOT NULL default CURRENT_TIMESTAMP,
+    registration_date DATET NOT NULL,
     occupation VARCHAR(50)
 );
 
